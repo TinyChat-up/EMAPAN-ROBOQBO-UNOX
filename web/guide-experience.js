@@ -22,7 +22,7 @@ function plan(goal){
  const result=[];for(let i=best;i!==-1;i=nodes[i].prev)result.unshift({x:nodes[i].x,y:nodes[i].y});if(goal&&segment(result.at(-1),goal)&&clear(goal.x,goal.y))result.push(goal);return result.filter((p,i,a)=>i===0||i===a.length-1||Math.abs((p.x-a[i-1].x)*(a[i+1].y-p.y)-(p.y-a[i-1].y)*(a[i+1].x-p.x))>.1);
 }
 function track(){
- trackFrame=0;const h=innerHeight;document.body.classList.toggle('past-intro',scrollY>h*.55);const cr=q('#contacto').getBoundingClientRect();document.body.classList.toggle('at-contact',cr.top<h*.85);
+ trackFrame=0;const h=innerHeight;document.body.classList.toggle('viewing-sat',!!q('.sat-intro')&&q('.sat-intro').getBoundingClientRect().bottom>84);document.body.classList.toggle('past-intro',scrollY>h*.55);const cr=q('#contacto').getBoundingClientRect();document.body.classList.toggle('at-contact',cr.top<h*.85);
  const ps=qa('.product-story').some(el=>{const r=el.getBoundingClientRect();return r.top<h*.65&&r.bottom>h*.35});document.body.classList.toggle('in-product',ps);const tr=q('.time-journey')?.getBoundingClientRect();document.body.classList.toggle('in-times',!!tr&&tr.top<h*.7&&tr.bottom>h*.3);
  const sr=q('.finale-mascot-slot')?.getBoundingClientRect();const was=finale;finale=!!sr&&sr.top>=80&&sr.bottom<h-20;finalPoint=finale?{x:sr.left,y:sr.top}:null;guide.classList.toggle('is-finale',finale);collect();route=[];nextRoam=0;
  if(activeCue&&(!visible(hero)||performance.now()-activeCue.since>2500))finishCue(visible(hero));
@@ -43,7 +43,7 @@ function animate(now){
  guide.dataset.routeLength=String(route.length);guide.dataset.motionPhase=activeCue?'welcome':finale?'finale':route.length?'exploring':'dancing';guide.style.setProperty('--guide-size',size+'px');guide.style.transform=`translate3d(${x.toFixed(2)}px,${y.toFixed(2)}px,0)`;if(!reduced.matches)frame=requestAnimationFrame(animate);
 }
 function wake(){if(!frame&&!muted&&!document.hidden){lastTime=performance.now();frame=requestAnimationFrame(animate)}}
-function welcome(){if(didPress||muted||reduced.matches||activeCue||!hero||scrollY>innerHeight*.5)return;hero.pause();activeCue={button:heroButton,since:performance.now()};if(isUnox)heroButton.textContent='Reproducir';collect();route=[];nextRoam=0;wake()}
+function welcome(){if(didPress||muted||reduced.matches||activeCue||!hero||!visible(hero)||scrollY>innerHeight*.5)return;hero.pause();activeCue={button:heroButton,since:performance.now()};if(isUnox)heroButton.textContent='Reproducir';collect();route=[];nextRoam=0;wake()}
 hero?.addEventListener('play',welcome);heroButton?.addEventListener('click',e=>{if(e.isTrusted){rememberPress();activeCue=null;route=[]}},true);
 addEventListener('scroll',scheduleTrack,{passive:true});addEventListener('resize',track);reduced.addEventListener('change',()=>{finishCue(false);track()});document.addEventListener('visibilitychange',()=>{if(document.hidden){if(activeCue){activeCue=null;route=[]}}else{track();wake()}});paintPreference();track();if(hero&&!hero.paused)welcome();
 // The visitor prepares the message here and confirms its delivery in WhatsApp.
@@ -57,7 +57,8 @@ q('.close').onclick=()=>dialog.close();dialog.addEventListener('click',e=>{if(e.
 (() => {
   const guide = document.querySelector('.brasa-guide');
   const setting = document.querySelector('#guide-setting');
-  if (!guide || !setting) return;
+  // The service entrance already has an explicit next step; keep it still and clear.
+  if (!guide || !setting || document.querySelector('.sat-intro')) return;
   const motion = matchMedia('(prefers-reduced-motion: reduce)');
   const key = 'emapan-scroll-understood-v1';
   let understood = false;

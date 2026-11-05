@@ -47,9 +47,7 @@ Abre http://localhost:8000 y http://localhost:8000/unox.html. Abrir los HTML con
 
 ## Guía visual de desplazamiento
 
-La mascota enseña el gesto sin añadir instrucciones visibles. Tras 4,2 segundos de inactividad en la entrada, hace dos gestos de 2,6 segundos: una mano desliza hacia arriba en móvil y una rueda de ratón se mueve en ordenador. La página acompaña el gesto con un avance total máximo de 112 píxeles. La flecha se puede tocar para continuar.
-
-La pista se retira inmediatamente al tomar el control y recuerda durante la sesión que el usuario ha aprendido a desplazarse. Respeta la opción de ocultar la mascota y la preferencia de movimiento reducido. En ese modo y en pantallas apaisadas muy bajas, solo aparece una flecha estática sin movimiento automático.
+La entrada SAT es estática: no muestra la mascota sobre el titular ni hace desplazamientos automáticos. El enlace «Explorar Roboqbo» o «Explorar UNOX» continúa hacia la experiencia de producto, donde se conserva la guía visual y la preferencia de ocultarla. También se respeta la preferencia de movimiento reducido.
 
 ## Cambios incluidos en esta entrega
 
@@ -67,3 +65,12 @@ Sintaxis de JavaScript, referencias a archivos locales, presencia de las dos pá
 
 - Subir archivos a GitHub: https://docs.github.com/en/repositories/working-with-files/managing-files/adding-a-file-to-a-repository
 - Configurar una web estática en Vercel: https://vercel.com/docs/builds/configure-a-build
+
+## Identidad SAT y enlaces compartidos
+
+Las dos páginas presentan a **Emapan S.L.** como **SAT · Servicio técnico oficial**. SAT significa Servicio de Asistencia Técnica. La frase de marca es «Si tu máquina protesta, hablamos su idioma.». No se atribuye la condición de SAT oficial a una marca concreta: las fuentes del repositorio no confirman autorizaciones de Roboqbo o UNOX.
+
+- Título de pestaña, Open Graph y Twitter: `Emapan S.L. | SAT oficial`.
+- Imagen compartida: `web/assets/emapan-sat-share.png` (1200 × 630), con fuente vectorial en el SVG del mismo nombre. El logo conserva los colores originales; el favicon usa el emblema blanco sobre carbón.
+- El HTML estático contiene las URL absolutas para `https://www.satemapan.com/`, incluidas las imágenes compartidas y las URL canónicas de `/` y `/unox.html`. No depende de JavaScript del navegador ni requiere compilación o variables de entorno. Si cambia el dominio, actualiza ambas páginas.
+- Tras desplegar, comprueba `/` y `/unox.html` en móvil y vuelve a solicitar la lectura de ambas URL en el depurador de enlaces de la plataforma social. La caché de cada plataforma puede conservar tarjetas anteriores.
