@@ -1,0 +1,48 @@
+/* Clean vector EMAPAN signature, without the small descriptor. */
+.logo.emapan-signature{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:0;width:178px;min-height:54px;flex-shrink:0;letter-spacing:0;line-height:1}
+.logo .emapan-logo-art{display:block;width:100%;height:49px;margin:0;background:url('assets/emapan-logo-clean.svg') center / contain no-repeat}
+.logo .emapan-logo-caption{display:block;margin:0 0 0 55px;font-size:7px;font-weight:400;letter-spacing:3.3px;line-height:1.4;color:#c9cec6}
+footer{position:relative;isolation:isolate;overflow:hidden;background:#101612;border-top:1px solid #ffffff12}
+.experience-unox footer{background:#080e18}
+footer:before{content:'';position:absolute;z-index:-1;inset:0 0 0 auto;width:min(780px,75%);background:url('assets/emapan-pattern-original.png') right center / auto 100% no-repeat;opacity:.065;filter:grayscale(1);-webkit-mask-image:linear-gradient(90deg,transparent,#000 65%);mask-image:linear-gradient(90deg,transparent,#000 65%);pointer-events:none}
+footer .logo.emapan-signature{width:220px;min-height:74px}
+footer .logo .emapan-logo-art{height:62px}
+footer .logo .emapan-logo-caption{margin-left:68px;font-size:8px;letter-spacing:4px}
+@media(max-width:760px){
+ header .logo.emapan-signature{width:110px;min-height:44px}
+ header .logo .emapan-logo-art{height:32px}
+ header .logo .emapan-logo-caption{margin:0 0 0 34px;font-size:5px;letter-spacing:2.2px}
+ footer:before{width:100%;background-size:auto 65%;background-position:125% 10%;opacity:.055;-webkit-mask-image:linear-gradient(180deg,#000,transparent 75%);mask-image:linear-gradient(180deg,#000,transparent 75%)}
+ footer .logo.emapan-signature{width:190px;min-height:65px}
+ footer .logo .emapan-logo-art{height:54px}
+ footer .logo .emapan-logo-caption{font-size:7px;margin-left:59px;letter-spacing:3.5px}
+}
+@media(max-width:380px){header .logo.emapan-signature{width:96px}header .logo .emapan-logo-art{height:30px}header .logo .emapan-logo-caption{margin-left:30px;font-size:4.5px;letter-spacing:1.9px}}
+
+/* Playback fallback is only shown when the video is stopped. */
+#play-film[hidden], .media-toggle[hidden]{display:none!important}
+
+/* Original blue and navy signature, on a light backing for contrast. */
+.logo.emapan-signature{background:#f8f9f6;padding:7px 10px;border-radius:7px}
+@media(max-width:760px){.logo.emapan-signature{padding:5px 7px;border-radius:5px}}
+
+/* A short demonstration by the existing mascot, without visible instructions. */
+.scroll-tutor{--pull:0;--press:0;position:fixed;z-index:57;left:62%;bottom:96px;transform:translateX(-50%);width:132px;height:202px;padding:0;border:0;border-radius:68px;background:radial-gradient(ellipse at 50% 65%,#08110ccc 0%,#08110c77 42%,transparent 71%);color:var(--brand,#d7edac);cursor:pointer;touch-action:pan-y;-webkit-tap-highlight-color:transparent;animation:tutor-enter .3s ease-out}
+.scroll-tutor:focus-visible{outline:2px solid var(--brand);outline-offset:4px}
+.tutor-track{position:absolute;left:50%;top:28px;bottom:53px;width:1px;background:linear-gradient(transparent,#ffffff22,transparent);pointer-events:none}
+.tutor-track i{position:absolute;left:-2px;width:4px;height:4px;border-radius:50%;background:currentColor;opacity:.45}
+.tutor-track i:nth-child(1){top:13%}.tutor-track i:nth-child(2){top:43%}.tutor-track i:nth-child(3){top:73%}
+.tutor-halo{position:absolute;left:36px;top:120px;width:60px;height:60px;border:1px solid currentColor;border-radius:50%;transform:translateY(calc(var(--pull) * -92px)) scale(calc(.85 + var(--press) * .3));opacity:calc(var(--press) * .65);pointer-events:none}
+.tutor-hand{display:none;position:absolute;left:80px;top:141px;width:31px;height:37px;transform:translateY(calc(var(--pull) * -92px)) rotate(-12deg);filter:drop-shadow(0 2px 4px #0008);pointer-events:none}
+.tutor-mouse{position:absolute;left:96px;top:132px;width:22px;height:35px;opacity:.9;pointer-events:none}
+.tutor-wheel{transform:translateY(calc(var(--pull) * 10px));opacity:calc(1 - var(--pull) * .65)}
+.tutor-next{position:absolute;left:51px;bottom:3px;width:30px;height:28px;transform:translateY(calc(var(--pull) * 5px));pointer-events:none}
+.scroll-onboarding .brasa-guide{--guide-size:58px!important;top:0!important;left:0!important;right:auto!important;width:58px!important;height:58px!important;transform:translate3d(var(--tutor-x,-100px),var(--tutor-y,-100px),0)!important;opacity:1!important;z-index:58;transition:none!important;pointer-events:none!important}
+.scroll-onboarding .brasa-guide .brasa-button{transform:scaleY(var(--tutor-stretch,1));pointer-events:none!important;filter:drop-shadow(0 3px 12px #0005)}
+.scroll-onboarding .guide-bubble{display:none!important}
+.scroll-tutor.is-still{height:58px;width:58px;background:#111b18e8;border:1px solid #ffffff35;border-radius:50%;animation:none}
+.scroll-tutor.is-still .tutor-next{left:13px;bottom:13px}.scroll-tutor.is-still .tutor-track,.scroll-tutor.is-still .tutor-halo,.scroll-tutor.is-still .tutor-mouse,.scroll-tutor.is-still .tutor-hand{display:none}
+@keyframes tutor-enter{from{opacity:0;transform:translate(-50%,9px)}to{opacity:1;transform:translate(-50%,0)}}
+@media(max-width:760px),(pointer:coarse){.scroll-tutor{left:50%;top:clamp(140px,30svh,300px);bottom:auto}.tutor-hand{display:block}.tutor-mouse{display:none}.scroll-tutor.is-still{top:auto;bottom:max(108px,calc(env(safe-area-inset-bottom) + 100px))}}
+@media(max-height:580px){.scroll-tutor{bottom:65px;transform:translateX(-50%) scale(.8);transform-origin:bottom center}}
+@media(prefers-reduced-motion:reduce){.scroll-tutor{animation:none}.scroll-tutor *{transform:none!important;transition:none!important;animation:none!important}}

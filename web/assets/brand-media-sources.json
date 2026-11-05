@@ -1,0 +1,51 @@
+{
+  "source": "Official manufacturer media. Native resolution. No AI generation. Video remux except short custard excerpt.",
+  "assets": {
+    "unox-reveal": [
+      "https://www.unox.com/unox/media/contents/cheftop-x-design-d.mp4",
+      "mp4"
+    ],
+    "unox-reveal-mobile": [
+      "https://www.unox.com/unox/media/contents/cheftop-x-design-m-4.mp4",
+      "mp4"
+    ],
+    "unox-display": [
+      "https://www.unox.com/unox/media/contents/Cheftop-X-Display-d.mp4",
+      "mp4"
+    ],
+    "unox-glass": [
+      "https://www.unox.com/unox/media/contents/Cheftop-X-Glass-d.mp4",
+      "mp4"
+    ],
+    "qbo-nuts": [
+      "https://www.roboqbo.com/roboqbo_foodservice/media/contents/pastry-shops-qbocore-powerspatola.mp4",
+      "mp4"
+    ],
+    "qbo-pastry": [
+      "https://www.roboqbo.com/roboqbo_foodservice/media/contents/all-at-once-workflow-11.mp4",
+      "mp4"
+    ],
+    "unox-fans-hq": [
+      "https://www.unox.com/unox/media/contents/cheftop-x-fans-d.jpg",
+      "jpg"
+    ],
+    "unox-interior-hq": [
+      "https://www.unox.com/unox/media/contents/cheftop-x-tank-d.jpg",
+      "jpg"
+    ],
+    "unox-range-hq": [
+      "https://www.unox.com/unox/media/contents/commercial-combi-ovens.jpg",
+      "jpg"
+    ]
+  },
+  "custard_excerpt": {
+    "source_asset": "qbo-pastry",
+    "from_seconds": 8.2,
+    "to_seconds": 9.3,
+    "native_dimensions": [
+      1024,
+      958
+    ],
+    "encoding": "libx264 CRF16, no upscale"
+  }
+}

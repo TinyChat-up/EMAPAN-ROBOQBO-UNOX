@@ -1,0 +1,127 @@
+[
+  [
+    "qbo-pro.png",
+    "https://www.roboqbo.com/roboqbo_foodservice/media/contents/qbo-pro-5-4.png",
+    59732
+  ],
+  [
+    "qbo-top.png",
+    "https://www.roboqbo.com/roboqbo_foodservice/media/contents/qbo-top-70-5.png",
+    75690
+  ],
+  [
+    "qbo-kitchen.jpg",
+    "https://www.roboqbo.com/roboqbo_foodservice/media/contents/qbo-for-restaurant-1.jpg",
+    95133
+  ],
+  [
+    "chef.jpg",
+    "https://www.unox.com/unox/media/contents/cheftop-x-loghi-d-3.jpg",
+    135833
+  ],
+  [
+    "cheftop.png",
+    "https://www.unox.com/unox/media/contents/professional-oven-cheftop-x-d.png",
+    105679
+  ],
+  [
+    "bakertop.png",
+    "https://www.unox.com/unox/media/contents/professional-oven-bakertop-x-d.png",
+    108652
+  ],
+  [
+    "speed.png",
+    "https://www.unox.com/unox/media/contents/commercial-oven-speed-compact-3.png",
+    51585
+  ],
+  [
+    "bakery.jpg",
+    "https://www.unox.com/unox/media/contents/bakertop-x-professional-combi-oven-d.jpg",
+    143073
+  ],
+  [
+    "qbo-story.mp4",
+    "https://www.roboqbo.com/es_es/",
+    "Extracto de cover.mp4 oficial disponible en la sesión; segundos 2–15. Recodificado para control por scroll, sin audio. No representa tiempos reales de cocción."
+  ],
+  [
+    "qbo-story-hd.mp4",
+    "Fuente cover.mp4 oficial de Roboqbo disponible en sesión",
+    "1920×1080, segundos 2–15; H.264 CRF17; reproducción continua"
+  ],
+  [
+    "qbo-kitchen-wide-hq.webp",
+    "TIFF aportado: qbo-for-restaurant-13.tif",
+    "3200 px, WebP calidad 95"
+  ],
+  [
+    "qbo-detail-hq.webp",
+    "TIFF aportado: qbo-for-restaurant-8.tif",
+    "3200 px, WebP calidad 95"
+  ],
+  [
+    "qbo-big-cutout.png",
+    "Imagen original qbo-big.png; extracción de fondo asistida por ImageGen",
+    "Fondo alfa transparente, acero neutral. Uso ilustrativo."
+  ],
+  [
+    "qbo-production.mp4",
+    "https://www.roboqbo.com/roboqbo_foodservice/media/contents/in-house-production-2.mp4",
+    "Official source; original video resolution retained"
+  ],
+  [
+    "qbo-meet.mp4",
+    "https://www.roboqbo.com/roboqbo_foodservice/media/contents/meet-qbo-roboqbo-d.mp4",
+    "Official source; original video resolution retained"
+  ],
+  [
+    "unox-film.mp4",
+    "https://www.unox.com/unox/media/contents/cheftop-x-cover-d-3.mp4",
+    "Official source; original video resolution retained"
+  ],
+  [
+    "qbo-bechamel.webp",
+    "https://www.roboqbo.com/roboqbo_foodservice/media/contents/performance-restaurant-béchamel.webp",
+    "Official source; original video resolution retained"
+  ],
+  [
+    "qbo-custard.webp",
+    "https://www.roboqbo.com/roboqbo_foodservice/media/contents/performance-restaurants-custard-2.webp",
+    "Official source; original video resolution retained"
+  ],
+  [
+    "qbo-tomato.webp",
+    "https://www.roboqbo.com/roboqbo_foodservice/media/contents/performance-restaurant-tomato-sauce.webp",
+    "Official source; original video resolution retained"
+  ],
+  [
+    "qbo-risotto.webp",
+    "https://www.roboqbo.com/roboqbo_foodservice/media/contents/performance-restaurant-risotto.webp",
+    "Official source; original video resolution retained"
+  ],
+  [
+    "unox-cooking.webp",
+    "https://www.unox.com/unox/media/contents/cheftop-x-interactive-cooking.webp",
+    "Official source; original video resolution retained"
+  ],
+  [
+    "unox-design.webp",
+    "https://www.unox.com/unox/media/contents/cheftop-x-design.webp",
+    "Official source; original video resolution retained"
+  ],
+  [
+    "unox-steam.webp",
+    "https://www.unox.com/unox/media/contents/cheftop-x-dry-maxi-steam-maxi-d.webp",
+    "Official source; original video resolution retained"
+  ],
+  [
+    "time-comparison",
+    "https://www.roboqbo.com/es_es/sectores/restaurantes/qbo-para-restaurantes/",
+    "Official restaurant examples; no batch or model specified. Cooking and chef time distinct; see inline explanation."
+  ],
+  [
+    "qbo-chef-prep.webp / qbo-chef-pour.webp",
+    "User supplied Unox_Orma-367.tif / Unox_Orma-445.tif",
+    "2400 px WebP; depicts Roboqbo; located only in Roboqbo chapter"
+  ]
+]

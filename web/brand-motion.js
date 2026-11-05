@@ -1,0 +1,40 @@
+(()=>{
+const one=s=>document.querySelector(s),all=s=>[...document.querySelectorAll(s)],limit=n=>Math.max(0,Math.min(1,n));
+function go(y){if(lenis)lenis.scrollTo(y,{duration:.7});else scrollTo({top:y,behavior:reduced.matches?'instant':'smooth'})}
+function initTime(){
+const recipes={
+bechamel:{name:'Bechamel',image:'qbo-bechamel.webp',cook:[40,20],chef:[40,1]},
+custard:{name:'Crema pastelera',image:'qbo-custard.webp',cook:[45,15],chef:[40,1]},
+bolognese:{name:'Boloñesa',image:'new-qbo-bolognese.webp',cook:[150,35],chef:[60,5]},
+pesto:{name:'Pesto',image:'new-qbo-pesto.webp',cook:[20,5],chef:[20,1]}};
+const keys=Object.keys(recipes),times=one('.time-journey'),timeStage=one('.time-stage'),texture=one('#texture-video'),film=texture.closest('.texture-film'),textureButton=one('#texture-pause');
+let recipe='bechamel',metric='cook',mediaRecipe='',texturePaused=reduced.matches,textureVisible=false,selectingUntil=0;
+function runTexture(){if(!textureVisible||texturePaused||document.hidden||one('#demo-dialog')?.open){texture.pause();return}if(!texture.getAttribute('src')){texture.src=texture.dataset.src;texture.load()}texture.play().catch(()=>{})}
+function syncTexture(){textureButton.hidden=!texture.paused;textureButton.textContent='Reproducir';textureButton.setAttribute('aria-label','Reproducir el vídeo de '+recipes[recipe].name)}
+function switchTexture(){if(mediaRecipe===recipe)return;mediaRecipe=recipe;const base='assets/new-qbo-'+recipe;film.classList.add('is-switching');film.style.backgroundImage=`url("${base}-poster.jpg")`;texture.pause();texture.poster=base+'-poster.jpg';texture.dataset.src=base+'.mp4';texture.setAttribute('aria-label','Preparación de '+recipes[recipe].name+' con Roboqbo');textureButton.hidden=false;one('#texture-caption').textContent=recipes[recipe].name+' / proceso real';texture.removeAttribute('src');if(textureVisible){texture.src=texture.dataset.src;texture.load()}runTexture();syncTexture();document.dispatchEvent(new CustomEvent('recipechange',{detail:{recipe}}));}
+texture.addEventListener('loadeddata',()=>{film.classList.remove('is-switching');runTexture()});texture.addEventListener('error',()=>{film.classList.remove('is-switching');textureButton.hidden=true;one('#texture-caption').textContent=recipes[recipe].name+' · imagen del proceso'});
+function paintTime(){const r=recipes[recipe],[a,b]=r[metric],other=metric==='cook'?'chef':'cook',gain=a-b;
+all('[data-recipe]').forEach(el=>el.setAttribute('aria-pressed',String(el.dataset.recipe===recipe)));all('[data-metric]').forEach(el=>el.setAttribute('aria-pressed',String(el.dataset.metric===metric)));one('[data-metric="cook"]').textContent=recipe==='pesto'?'Tiempo de preparación':'Tiempo de cocción';
+one('#recipe-image').src='assets/'+r.image;one('#recipe-image').alt=r.name;one('#recipe-caption').textContent=r.name;one('#time-without').textContent=a;one('#time-with').textContent=b;one('#time-arc').style.strokeDashoffset=100-b/a*100;one('#time-gain').textContent=gain+' min';one('#gain-label').textContent=metric==='cook'?(recipe==='pesto'?'menos de preparación':'menos de cocción'):'menos de dedicación';one('#time-percent').textContent='−'+Math.round(gain/a*100)+'%';one('#secondary-label').textContent=(other==='cook'?(recipe==='pesto'?'Preparación':'Cocción'):'Dedicación del chef')+' · sin / con Qbo';one('#secondary-values').textContent=r[other][0]+' → '+r[other][1]+' min';one('#time-insight').textContent='Proceso y dedicación del chef son medidas distintas; no se suman.';switchTexture();}
+all('[data-metric]').forEach(b=>b.onclick=()=>{metric=b.dataset.metric;paintTime()});
+all('[data-recipe]').forEach(b=>b.onclick=()=>{recipe=b.dataset.recipe;selectingUntil=performance.now()+900;paintTime();if(!reduced.matches&&innerWidth>760){const i=keys.indexOf(recipe);go(scrollY+times.getBoundingClientRect().top+(times.offsetHeight-timeStage.offsetHeight)*(i+.25)/keys.length)}});
+textureButton.onclick=()=>{if(texture.paused){texturePaused=false;runTexture()}};['play','pause'].forEach(e=>texture.addEventListener(e,syncTexture));
+new IntersectionObserver(es=>{textureVisible=es[0].isIntersecting;runTexture()},{threshold:.15}).observe(texture);
+function update(){const distance=times.offsetHeight-timeStage.offsetHeight,p=distance>0?limit(-times.getBoundingClientRect().top/distance):0;one('.time-track span').style.transform=`scaleX(${p})`;if(!reduced.matches&&innerWidth>760&&distance>100&&performance.now()>selectingUntil){const k=keys[Math.min(keys.length-1,Math.floor(p*keys.length))];if(k!==recipe){recipe=k;paintTime()}}}
+addEventListener('scroll',update,{passive:true});addEventListener('resize',update);reduced.addEventListener('change',()=>{texturePaused=reduced.matches;runTexture();update()});document.addEventListener('visibilitychange',runTexture);paintTime();update();
+}
+function initOven(){
+const oven=one('.unox-journey'),stage=oven.querySelector('.product-stage'),cinema=one('.oven-cinema'),reveal=one('#oven-reveal'),parts=[...stage.children].filter(e=>e!==cinema&& !e.matches('.story-track'));let started=false,held=false,loaded=false,p=0;
+function hold(){held=true;reveal.pause();if(reveal.readyState>=1)reveal.currentTime=Math.min(2.95,reveal.duration-.05);one('#oven-status').textContent='SIGUE BAJANDO · DESCUBRE LOS HORNOS'}
+function loadReveal(){if(loaded)return;loaded=true;reveal.querySelectorAll('source').forEach(s=>s.src=s.dataset.src);reveal.load()}
+function playReveal(){if(reduced.matches||held||document.hidden)return;loadReveal();started=true;one('#replay-unox').textContent='Repetir';reveal.play().catch(()=>{one('#oven-status').textContent='PULSA REPETIR O SIGUE BAJANDO PARA EXPLORAR LA GAMA'})}
+reveal.addEventListener('timeupdate',()=>{if(!held&&reveal.currentTime>=2.95)hold()});reveal.addEventListener('ended',hold);reveal.addEventListener('loadedmetadata',()=>{if(held)hold()});reveal.addEventListener('error',()=>{one('#oven-status').textContent='EXPLORA LA GAMA DESLIZANDO HACIA ABAJO'});
+new IntersectionObserver(es=>{if(es[0].isIntersecting&&!started)playReveal()},{threshold:.2}).observe(cinema);
+function ovenGo(progress){go(scrollY+oven.getBoundingClientRect().top+(oven.offsetHeight-stage.offsetHeight)*progress)}
+one('#skip-unox').onclick=()=>{loadReveal();hold();ovenGo(.26)};one('#replay-unox').onclick=()=>{held=false;started=false;loadReveal();reveal.currentTime=0;if(!one('#replay-unox').dataset.guidePress)ovenGo(.015);playReveal();one('#oven-status').textContent='MIRA. DESPUÉS, DESLIZA.'};
+all('[data-oven]').forEach(b=>b.onclick=()=>{if(reduced.matches||matchMedia('(max-height:500px) and (orientation:landscape)').matches)selectModel('oven',b.dataset.oven);else ovenGo(.22+.78*(Object.keys(models.oven).indexOf(b.dataset.oven)+.15)/3)});
+function update(){const distance=oven.offsetHeight-stage.offsetHeight;p=distance>0?limit(-oven.getBoundingClientRect().top/distance):0;const blend=(reduced.matches||matchMedia('(max-height:500px) and (orientation:landscape)').matches)?1:limit((p-.12)/.10);oven.style.setProperty('--reveal-opacity',1-blend);oven.style.setProperty('--models-opacity',blend);oven.style.setProperty('--reveal-scale',1+p*.18);cinema.inert=blend===1;cinema.setAttribute('aria-hidden',blend===1);parts.forEach(el=>{el.inert=blend<1;el.setAttribute('aria-hidden',blend<1)});oven.querySelector('.story-track span').style.transform=`scaleX(${p})`;if(p>.13&&!held&&!reduced.matches){loadReveal();hold()}if(!reduced.matches&&distance>100&&blend===1)selectModel('oven',Object.keys(models.oven)[Math.min(2,Math.floor(limit((p-.22)/.78)*3))]);}
+addEventListener("scroll",update,{passive:true});addEventListener("resize",update);reduced.addEventListener("change",()=>{if(reduced.matches)reveal.pause();update()});document.addEventListener("visibilitychange",()=>{if(document.hidden)reveal.pause();else if(started&&!held)playReveal()});update();
+}
+if(one(".time-journey"))initTime();if(one(".unox-journey"))initOven();
+})();

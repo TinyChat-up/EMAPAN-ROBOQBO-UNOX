@@ -1,0 +1,57 @@
+{
+  "source_page": "https://www.roboqbo.com/es_es/sectores/restaurantes/qbo-para-restaurantes/",
+  "checked": "2026-11-04",
+  "video_notes": "Official manufacturer footage; H.264 stream copied, audio removed, faststart. 1024×958 native. Bechamel and custard depict full preparation/comparison workflows; bolognese and pesto depict actual mixing. Each independent cooking/chef example is specific to manufacturer restaurant context, with no batch size, model or testing protocol declared. Video run time is not recipe duration. Pesto manufacturer labels first measure cooking; UI should preferably say recipe/process time for pesto.",
+  "assets": {
+    "bechamel": {
+      "source": "https://www.roboqbo.com/roboqbo_foodservice/media/contents/all-at-once-workflow-9.mp4",
+      "duration": 16.52,
+      "cook": [
+        40,
+        20
+      ],
+      "chef": [
+        40,
+        1
+      ]
+    },
+    "custard": {
+      "source": "https://www.roboqbo.com/roboqbo_foodservice/media/contents/all-at-once-workflow-11.mp4",
+      "duration": 18.2,
+      "cook": [
+        45,
+        15
+      ],
+      "chef": [
+        40,
+        1
+      ]
+    },
+    "bolognese": {
+      "source": "https://www.roboqbo.com/roboqbo_foodservice/media/contents/qbo.mp4",
+      "duration": 3.68,
+      "cook": [
+        150,
+        35
+      ],
+      "chef": [
+        60,
+        5
+      ]
+    },
+    "pesto": {
+      "source": "https://www.roboqbo.com/roboqbo_foodservice/media/contents/qbocore-powermix-ristorante.mp4",
+      "duration": 4.48,
+      "cook": [
+        20,
+        5
+      ],
+      "chef": [
+        20,
+        1
+      ]
+    }
+  },
+  "hero_source": "https://www.roboqbo.com/roboqbo_foodservice/media/contents/coverband-foodservice-d-2.mp4",
+  "hero_note": "Current official 1920×1080 source is 24.92s and shares bolognese/pasta narrative with existing hero. At 1.36Mbps it is not demonstrably higher quality than prior supplied source; existing 1920×1080 hero retained. Do not claim new resolution or recovered source detail."
+}

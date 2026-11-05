@@ -1,0 +1,40 @@
+[
+  {
+    "file": "new-unox-chefs.mp4",
+    "poster": "new-unox-chefs-poster.jpg",
+    "page": "https://www.unox.com/es_es/líneas/cheftop-mindmaps-plus/",
+    "source": "https://www.unox.com/unox/media/contents/cheftop-mind-maps-plus-commercial-combi-oven-unox-d-3.mp4",
+    "processing": "Original video stream remuxed without audio, no upscale or AI",
+    "probe": {
+      "programs": [],
+      "streams": [
+        {
+          "width": 1920,
+          "height": 1080
+        }
+      ],
+      "format": {
+        "duration": "9.384375"
+      }
+    }
+  },
+  {
+    "file": "new-unox-baking.mp4",
+    "poster": "new-unox-baking-poster.jpg",
+    "page": "https://www.unox.com/es_es/líneas/bakertop-mindmaps-plus/",
+    "source": "https://www.unox.com/unox/media/contents/bakertop-mind.mp4",
+    "processing": "Original video stream remuxed without audio, no upscale or AI",
+    "probe": {
+      "programs": [],
+      "streams": [
+        {
+          "width": 1920,
+          "height": 1080
+        }
+      ],
+      "format": {
+        "duration": "7.966292"
+      }
+    }
+  }
+]
