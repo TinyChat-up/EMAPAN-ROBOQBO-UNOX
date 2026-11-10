@@ -9,6 +9,11 @@ Actualizada el 5 de noviembre de 2026 a partir de la versión 16 de EMAPAN.
 - `web/unox.html`: experiencia UNOX.
 - `web/assets/`: todas las imágenes, vídeos, logo vectorial y fondo de marca.
 - `web/*.css` y `web/*.js`: estilos, navegación, comparativas, galerías y mascota.
+- `web/evolution.js` y `web/evolution.css`: selector de necesidades, contacto contextual, gestos y animaciones añadidos en noviembre de 2026.
+- `web/analytics.js`: analítica básica sin cookies (Vercel Web Analytics).
+- `web/assets/opt/`: variantes ligeras de vídeos e imágenes. Los originales siguen en `web/assets/`.
+- `tools/optimize-media.sh`: regenera `web/assets/opt/` a partir de los originales (requiere ffmpeg).
+- `docs/EVOLUCION-2026-11.md`: diagnóstico, plan, mediciones antes/después y guía de revisión de la evolución.
 - `web/vendor/`: librería local de desplazamiento y licencias conservadas.
 - `vercel.json`: configuración para publicar la carpeta `web` sin compilación.
 
@@ -25,7 +30,7 @@ El sitio es HTML, CSS y JavaScript: no requiere instalar paquetes, claves de API
 
 No subas el ZIP: GitHub no lo descomprime para crear la web. Tampoco arrastres la carpeta exterior `EMAPAN-ROBOQBO-UNOX`: entra en ella y sube su contenido.
 
-Se proponen dos subidas porque GitHub permite hasta 100 archivos por tanda. La carpeta `web` contiene 99 archivos; todos pesan menos de 25 MiB.
+GitHub permite hasta 100 archivos por tanda en la subida desde el navegador y la carpeta `web` contiene ahora 147, así que la subida manual exige varias tandas. Es más cómodo trabajar con Git: cada envío a una rama genera además una vista previa en Vercel.
 
 ## Conectar con Vercel
 
@@ -62,6 +67,16 @@ La pista se retira inmediatamente al tomar el control y recuerda durante la sesi
 ## Comprobaciones de la entrega
 
 Sintaxis de JavaScript, referencias a archivos locales, presencia de las dos páginas e integridad del ZIP revisadas. La guía se ha comprobado en navegador a 390 × 844 y en ordenador; se han validado sus límites de desplazamiento, la interrupción al deslizar, el avance al tocar la flecha y la preferencia de movimiento reducido. Esta copia no se ha desplegado en Vercel.
+
+## Evolución de noviembre de 2026
+
+Resumen; el detalle está en `docs/EVOLUCION-2026-11.md`.
+
+- **Selector de necesidades.** Dos preguntas y una recomendación de gama. Solo usa datos ya publicados en la web (capacidades de Roboqbo y uso de cada línea UNOX). Para cambiar preguntas u opciones, editar el bloque `FINDER` al principio de `web/evolution.js`. No añadir cifras ni prestaciones que no procedan de documentación del fabricante.
+- **Contacto contextual.** El mensaje de WhatsApp incluye modelo, respuestas del selector e intención (prueba, presupuesto o asesoramiento). El sitio sigue sin guardar nada en una base de datos.
+- **Medios ligeros.** Las páginas cargan las variantes de `web/assets/opt/`; en móvil, versiones más pequeñas. Tras sustituir un original, ejecutar `bash tools/optimize-media.sh`.
+- **Analítica.** Activarla en Vercel → proyecto → Analytics → Enable Web Analytics. Sin cookies; no envía texto escrito por el visitante; respeta «Do Not Track». Con `?analytics=debug` en la URL se ven los eventos en la consola.
+- **Caché.** `vercel.json` sirve `/assets` con caché de un día. Si se sustituye un archivo conservando el nombre, los visitantes recientes pueden tardar hasta un día en ver el nuevo.
 
 ## Documentación oficial
 

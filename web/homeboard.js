@@ -1,6 +1,6 @@
 const ambientVideos=[...document.querySelectorAll('.ambient-video')];
 const mediaState=new Map(ambientVideos.map(v=>[v,{visible:false,paused:reduced.matches,loaded:false}]));
-function loadMedia(v){const s=mediaState.get(v);if(s.loaded)return;s.loaded=true;v.closest('.inline-film').querySelector('.media-error').hidden=true;document.querySelector(`[data-video="${v.id}"]`).hidden=false;v.querySelectorAll('source[data-src]').forEach(src=>{src.src=src.dataset.src});v.load()}
+function loadMedia(v){const s=mediaState.get(v);if(s.loaded)return;s.loaded=true;v.closest('.inline-film').querySelector('.media-error').hidden=true;document.querySelector(`[data-video="${v.id}"]`).hidden=false;const small=matchMedia('(max-width:760px)').matches||!!navigator.connection?.saveData;v.querySelectorAll('source[data-src]').forEach(src=>{src.src=small&&src.dataset.srcMobile||src.dataset.src});v.load()}
 function syncMedia(v){const b=document.querySelector(`[data-video="${v.id}"]`);b.hidden=!v.paused;b.textContent='Reproducir';b.setAttribute('aria-label','Reproducir '+v.getAttribute('aria-label'))}
 function runMedia(v){const s=mediaState.get(v);if(document.hidden||!s.visible||s.paused){v.pause();return}loadMedia(v);v.muted=true;v.play().catch(()=>syncMedia(v))}
 const mediaObserver=new IntersectionObserver(entries=>entries.forEach(e=>{const v=e.target,s=mediaState.get(v);s.visible=e.isIntersecting&&e.intersectionRatio>.15;runMedia(v)}),{threshold:[0,.15,.5]});

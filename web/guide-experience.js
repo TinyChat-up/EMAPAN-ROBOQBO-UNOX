@@ -28,17 +28,17 @@ function track(){
  if(activeCue&&(!visible(hero)||performance.now()-activeCue.since>2500))finishCue(visible(hero));
  // On scroll, fade out only if content moves into the guide's safe lane.
  hidden=!clear(x,y,Math.min(size,baseSize()));if(hidden&&!finale){const candidates=[{x:3,y:clamp(y,80,h-baseSize()-12)},{x:innerWidth-baseSize()-3,y:clamp(y,80,h-baseSize()-12)}];const safe=candidates.find(p=>clear(p.x,p.y));if(safe){x=safe.x;y=safe.y;vx=vy=0;hidden=false}}
- if(was&&!finale)size=baseSize();guide.style.opacity=hidden?'0':'1';wake();
+ if(was&&!finale)size=baseSize();guide.style.opacity=hidden?'0':'1';guide.classList.toggle('is-away',hidden);wake();
 }
 function scheduleTrack(){scrollStamp=performance.now();if(!trackFrame)trackFrame=requestAnimationFrame(track)}
 function morph(now){const speed=Math.min(1,(Math.abs(vx)+Math.abs(vy))/8),t=now*.002,pts=[];for(let i=0;i<8;i++){const a=i*Math.PI/4,rr=42+(Math.sin(t+i*1.7)*2.6+Math.sin(t*.7-i)*2.1)*(1+speed);pts.push([50+Math.cos(a)*rr,52+Math.sin(a)*rr])}let d='M'+((pts[7][0]+pts[0][0])/2)+','+((pts[7][1]+pts[0][1])/2);pts.forEach((p,i)=>{const n=pts[(i+1)%8];d+=' Q'+p[0]+','+p[1]+' '+((p[0]+n[0])/2)+','+((p[1]+n[1])/2)});path.setAttribute('d',d+'Z');const press=now<pressUntil?.25:0,dance=route.length?0:Math.sin(now*.003)*.035;guide.style.setProperty('--jelly-x',1+Math.min(.42,Math.abs(vx)*.08)+press+dance);guide.style.setProperty('--jelly-y',1+Math.min(.4,Math.abs(vy)*.08)-press-dance);guide.style.setProperty('--jelly-turn',clamp(vx*5+Math.sin(now*.002)*4,-22,22)+'deg')}
 function animate(now){
- frame=0;if(muted||document.hidden)return;const dt=clamp((now-lastTime)/16.67,.1,2);lastTime=now;if(q('#demo-dialog')?.open){frame=requestAnimationFrame(animate);return}
+ frame=0;if(muted||document.hidden)return;const dt=clamp((now-lastTime)/16.67,.1,2);lastTime=now;if(q('dialog[open]')){frame=requestAnimationFrame(animate);return}
  let goal=finalPoint;if(activeCue){const r=heroButton.getBoundingClientRect();goal={x:r.left-baseSize()+8,y:r.top+(r.height-baseSize())/2};if(now-activeCue.since>2500||!visible(hero)){finishCue(visible(hero));goal=finalPoint}}
  if(reduced.matches){route=[];if(finale){x=goal.x;y=goal.y;size=innerWidth<=760?76:112}guide.style.opacity=finale?'1':'0'}else{
  if(now>nextRoam&&!route.length&&now-scrollStamp>180){collect();route=plan(goal);nextRoam=now+(goal?700:6500);side*=-1}
  const point=route[0];if(point){const dist=Math.hypot(point.x-x,point.y-y),speed=activeCue?12:finale?14:1.8;if(dist<2){route.shift();vx=vy=0}else{const move=Math.min(dist,speed*dt),nx=x+(point.x-x)/dist*move,ny=y+(point.y-y)/dist*move;if(clear(nx,ny)){vx=(nx-x)/dt;vy=(ny-y)/dt;x=nx;y=ny;hidden=false}else{route=[];nextRoam=now+800;vx=vy=0}}}else{vx*=.8;vy*=.8}
- if(activeCue&&goal&&Math.hypot(x-goal.x,y-goal.y)<5)finishCue();const arrived=finale&&Math.hypot(x-finalPoint.x,y-finalPoint.y)<5;if(arrived){x=finalPoint.x;y=finalPoint.y;route=[];nextRoam=Infinity}guide.dataset.docked=String(arrived);const targetSize=arrived?(innerWidth<=760?76:112):baseSize();size+=(targetSize-size)*.1*dt;guide.style.opacity=hidden?'0':'1';morph(now)
+ if(activeCue&&goal&&Math.hypot(x-goal.x,y-goal.y)<5)finishCue();const arrived=finale&&Math.hypot(x-finalPoint.x,y-finalPoint.y)<5;if(arrived){x=finalPoint.x;y=finalPoint.y;route=[];nextRoam=Infinity}guide.dataset.docked=String(arrived);const targetSize=arrived?(innerWidth<=760?76:112):baseSize();size+=(targetSize-size)*.1*dt;guide.style.opacity=hidden?'0':'1';guide.classList.toggle('is-away',hidden);morph(now)
  }
  guide.dataset.routeLength=String(route.length);guide.dataset.motionPhase=activeCue?'welcome':finale?'finale':route.length?'exploring':'dancing';guide.style.setProperty('--guide-size',size+'px');guide.style.transform=`translate3d(${x.toFixed(2)}px,${y.toFixed(2)}px,0)`;if(!reduced.matches)frame=requestAnimationFrame(animate);
 }
@@ -46,11 +46,7 @@ function wake(){if(!frame&&!muted&&!document.hidden){lastTime=performance.now();
 function welcome(){if(didPress||muted||reduced.matches||activeCue||!hero||scrollY>innerHeight*.5)return;hero.pause();activeCue={button:heroButton,since:performance.now()};if(isUnox)heroButton.textContent='Reproducir';collect();route=[];nextRoam=0;wake()}
 hero?.addEventListener('play',welcome);heroButton?.addEventListener('click',e=>{if(e.isTrusted){rememberPress();activeCue=null;route=[]}},true);
 addEventListener('scroll',scheduleTrack,{passive:true});addEventListener('resize',track);reduced.addEventListener('change',()=>{finishCue(false);track()});document.addEventListener('visibilitychange',()=>{if(document.hidden){if(activeCue){activeCue=null;route=[]}}else{track();wake()}});paintPreference();track();if(hero&&!hero.paused)welcome();
-// The visitor prepares the message here and confirms its delivery in WhatsApp.
-const dialog=q('#demo-dialog'),interest=q('#interest'),name=q('#contact-name'),idea=q('#contact-idea'),send=q('#send-message');let trigger=null,playing=[];
-function compose(){const who=name.value.trim(),recipe=idea.value.trim();const message=(who?'Hola, soy '+who+'. ':'Hola. ')+(isUnox?'Me interesan los hornos UNOX. ':'Me gustaría una prueba gratis y sin compromiso con un chef profesional y la máquina Roboqbo. ')+'Equipo: '+interest.value+'.'+(recipe?' Mi receta o idea: '+recipe:'');send.href='https://wa.me/34615619104?text='+encodeURIComponent(message)}
-qa('[data-demo]').forEach(b=>b.onclick=()=>{trigger=b;q('#contact-form').reset();interest.value=b.dataset.demo;compose();setBubble(false);playing=qa('video').filter(v=>!v.paused);playing.forEach(v=>v.pause());dialog.showModal();lenis?.stop()});
-q('.close').onclick=()=>dialog.close();dialog.addEventListener('click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close()}});dialog.addEventListener('close',()=>{lenis?.start();if(!reduced.matches&&!document.hidden)playing.forEach(v=>{const r=v.getBoundingClientRect();if(r.bottom>0&&r.top<innerHeight)v.play().catch(()=>{})});q('#contact-form').reset();trigger?.focus({preventScroll:true})});dialog.setAttribute('data-lenis-prevent','');name.addEventListener('input',compose);idea.addEventListener('input',compose);q('#contact-form').onsubmit=e=>{e.preventDefault();send.click()};
+// El diálogo de contacto vive ahora en evolution.js (contacto contextual).
 })();
 
 /* Brasa demonstrates scrolling; real input always takes over immediately. */
