@@ -1,0 +1,535 @@
+/*
+ * EMAPAN · capa de evolución (noviembre 2026)
+ * ---------------------------------------------------------------------------
+ * Estilos de lo añadido en evolution.js y ajustes de recorrido móvil.
+ * Se carga la última: no reescribe las hojas anteriores, solo las afina.
+ * Usa los colores de cada experiencia mediante --brand (lima Roboqbo, azul UNOX).
+ */
+
+/* 1. Colores de los paneles ------------------------------------------------ */
+.experience-qbo {
+  --panel: #202621;
+  --panel-deep: #141915;
+  --panel-line: #414b41;
+  --panel-soft: #c7d1c0;
+  --panel-mute: #96a38d;
+  --on-brand: #111a12;
+}
+.experience-unox {
+  --panel: #101c2c;
+  --panel-deep: #091323;
+  --panel-line: #2c415f;
+  --panel-soft: #c3d0e2;
+  --panel-mute: #8ea0b9;
+  --on-brand: #061527;
+}
+
+/* 2. Accesos al selector --------------------------------------------------- */
+.hero-finder,
+.finder-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  border: 1px solid color-mix(in srgb, var(--brand) 55%, transparent);
+  border-radius: 99px;
+  background: #0b120e66;
+  color: #f3f6ee;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition: background .3s, border-color .3s, color .3s, scale .2s;
+}
+.hero-finder::after,
+.finder-chip::after {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-right: 1.5px solid currentColor;
+  border-top: 1.5px solid currentColor;
+  rotate: 45deg;
+  opacity: .8;
+  transition: translate .3s;
+}
+.hero-finder:hover,
+.finder-chip:hover {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: var(--on-brand);
+}
+.hero-finder:hover::after,
+.finder-chip:hover::after { translate: 3px 0; }
+.hero-finder:active,
+.finder-chip:active,
+.finder-option:active,
+.finder-range:active,
+.dock-finder:active { scale: .98; }
+
+.hero-finder {
+  pointer-events: auto;
+  margin-top: 26px;
+  padding: 0 22px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.experience-unox .hero-finder { background: #0a152666; }
+
+.finder-chip {
+  min-height: 40px;
+  padding: 0 16px;
+  font-size: 11px;
+  border-color: var(--line, #ffffff28);
+  background: transparent;
+  color: #dfe5da;
+}
+
+.finale-finder,
+.finder-link,
+.context-change {
+  border: 0;
+  background: none;
+  padding: 0;
+  color: inherit;
+  font-size: 13px;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, currentColor 40%, transparent);
+  text-underline-offset: 4px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+.finale-finder { margin-top: 14px; color: #596750; }
+.experience-unox .finale-finder { color: #b7c6da; margin-top: 22px; }
+
+/* 3. Barra inferior -------------------------------------------------------- */
+.contact-dock { padding-left: 8px; }
+body .contact-dock > .dock-finder {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  margin-right: 8px;
+  padding: 4px 12px 4px 4px;
+  border: 0;
+  background: transparent;
+  color: #edf2e9;
+  text-align: left;
+  white-space: normal;
+}
+.dock-brasa {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--brand) 16%, transparent);
+}
+.dock-brasa svg { width: 22px; height: 22px; display: block; }
+.dock-text { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.dock-text b {
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.dock-text small { font-size: 10px; color: var(--panel-mute); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* 4. Diálogos: entrada suave ---------------------------------------------- */
+dialog[open] {
+  opacity: 1;
+  translate: 0 0;
+  transition: opacity .28s ease-out, translate .38s cubic-bezier(.2, .7, .2, 1), overlay .38s allow-discrete, display .38s allow-discrete;
+}
+@starting-style {
+  dialog[open] { opacity: 0; translate: 0 18px; }
+}
+dialog::backdrop { transition: opacity .28s ease-out; }
+@starting-style {
+  dialog[open]::backdrop { opacity: 0; }
+}
+
+/* 5. Selector de necesidades ---------------------------------------------- */
+.finder {
+  padding: 22px 28px 30px;
+  max-width: 520px;
+  color: #f1f4ec;
+}
+.finder-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+}
+.finder-top .eyebrow { flex: 1; color: var(--brand); font-size: 10px; letter-spacing: 1.6px; }
+.finder .finder-close { position: static; margin-right: -12px; }
+.finder-host {
+  flex: none;
+  width: 38px;
+  height: 41px;
+  filter: drop-shadow(0 3px 5px #0005);
+  animation: brasa-breathe 3.6s ease-in-out infinite;
+  transform-origin: 50% 90%;
+}
+.finder-host svg { display: block; width: 100%; height: 100%; }
+@keyframes brasa-breathe {
+  50% { transform: scale(1.05, .95); }
+}
+.finder-progress {
+  height: 2px;
+  margin: 14px 0 26px;
+  border-radius: 2px;
+  background: var(--panel-line);
+  overflow: hidden;
+}
+.finder-progress span {
+  display: block;
+  height: 100%;
+  background: var(--brand);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .5s cubic-bezier(.2, .7, .2, 1);
+}
+.finder-count {
+  margin: 0;
+  font-size: 11px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--panel-mute);
+}
+.finder .finder-question {
+  margin: 10px 0 0;
+  font-size: clamp(28px, 7.4vw, 36px);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -.04em;
+  outline: 0;
+}
+.finder-note {
+  margin: 12px 0 0;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--panel-mute);
+}
+.finder-options { display: grid; gap: 8px; margin-top: 22px; }
+.finder-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 52px;
+  padding: 12px 18px;
+  border: 1px solid var(--panel-line);
+  border-radius: 14px;
+  background: var(--panel-deep);
+  color: #f1f4ec;
+  font-size: 15px;
+  text-align: left;
+  transition: border-color .2s, background .2s, color .2s, scale .15s;
+}
+.finder-option::after {
+  content: '';
+  flex: none;
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid var(--panel-mute);
+  border-radius: 50%;
+  transition: border-color .2s, background .2s, box-shadow .2s;
+}
+.finder-option:hover { border-color: color-mix(in srgb, var(--brand) 60%, transparent); }
+.finder-option[aria-pressed='true'] {
+  border-color: var(--brand);
+  background: color-mix(in srgb, var(--brand) 12%, var(--panel-deep));
+}
+.finder-option[aria-pressed='true']::after {
+  border-color: var(--brand);
+  background: var(--brand);
+  box-shadow: inset 0 0 0 3px var(--panel-deep);
+}
+.finder .finder-link { margin-top: 10px; color: var(--panel-soft); }
+
+.finder-result {
+  display: grid;
+  grid-template-columns: 124px 1fr;
+  align-items: center;
+  gap: 18px;
+  margin-top: 16px;
+}
+.finder-thumb {
+  display: block;
+  overflow: hidden;
+  border-radius: 16px;
+  background: radial-gradient(circle at 50% 40%, #ffffff14, transparent 70%), var(--panel-deep);
+}
+.finder-thumb img { display: block; width: 100%; height: 100%; object-fit: contain; }
+/* Las fotos de Roboqbo traen mucho margen alrededor de la máquina. */
+.experience-qbo .finder-thumb img { scale: 1.5; }
+.finder-result .finder-thumb { width: 124px; height: 124px; }
+.finder-result .finder-question { margin: 0; }
+.finder-fact { margin: 8px 0 0; font-size: 16px; color: var(--brand); }
+.finder-reason {
+  margin: 20px 0 0;
+  padding-left: 14px;
+  border-left: 2px solid var(--brand);
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--panel-soft);
+}
+.finder-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 22px; }
+.finder-actions .pill:only-child { grid-column: 1 / -1; }
+.finder .finder-actions .pill {
+  justify-content: center;
+  min-height: 52px;
+  padding: 12px 14px;
+  font-size: 13px;
+  text-align: center;
+  background: var(--brand);
+  color: var(--on-brand);
+}
+.finder .finder-actions .pill.outline {
+  background: transparent;
+  color: var(--brand);
+  border: 1px solid color-mix(in srgb, var(--brand) 50%, transparent);
+}
+.finder .finder-disclaimer {
+  margin: 18px 0 0;
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--panel-mute);
+}
+.finder-foot {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 4px 20px;
+  margin-top: 6px;
+}
+.finder-foot .finder-link { margin-top: 0; }
+.finder-ranges { display: grid; gap: 8px; margin-top: 20px; }
+.finder-range {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  align-items: center;
+  gap: 14px;
+  min-height: 68px;
+  padding: 6px 16px 6px 8px;
+  border: 1px solid var(--panel-line);
+  border-radius: 14px;
+  background: var(--panel-deep);
+  color: #f1f4ec;
+  text-align: left;
+  transition: border-color .2s, scale .15s;
+}
+.finder-range:hover { border-color: var(--brand); }
+.finder-range .finder-thumb { width: 56px; height: 56px; border-radius: 10px; background: none; }
+.finder-range b { display: block; font-size: 15px; font-weight: 600; }
+.finder-range small { display: block; margin-top: 3px; font-size: 13px; color: var(--brand); }
+
+/* 6. Contacto contextual --------------------------------------------------- */
+.contact-context {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 4px 16px;
+  border: 1px solid var(--panel-line);
+  border-radius: 14px;
+  background: var(--panel-deep);
+}
+.contact-context > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  min-height: 44px;
+  padding: 6px 0;
+}
+.contact-context > div + div { border-top: 1px solid var(--panel-line); }
+.contact-context dt { flex: none; font-size: 12px; color: var(--panel-mute); }
+.contact-context dd {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 2px 12px;
+  margin: 0;
+  font-size: 14px;
+  text-align: right;
+  color: #f1f4ec;
+}
+.context-change { min-height: 32px; font-size: 12px; color: var(--brand); }
+
+.contact-intent { margin: 0; padding: 0; border: 0; min-width: 0; }
+.contact-intent legend { padding: 0; font-size: 13px; color: var(--panel-soft); }
+.chip-row { display: flex; gap: 6px; margin-top: 10px; }
+#contact-form .chip { position: relative; display: block; flex: 1 1 0; min-width: 0; margin: 0; cursor: pointer; }
+#contact-form .chip input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+#contact-form .chip span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 4px 8px;
+  border: 1px solid var(--panel-line);
+  border-radius: 99px;
+  font-size: 12.5px;
+  line-height: 1.2;
+  text-align: center;
+  color: var(--panel-soft);
+  transition: border-color .2s, background .2s, color .2s;
+}
+#contact-form .chip input:checked + span {
+  border-color: var(--brand);
+  background: color-mix(in srgb, var(--brand) 14%, transparent);
+  color: #f6f9f1;
+}
+#contact-form .chip input:focus-visible + span { outline: 2px solid var(--brand); outline-offset: 3px; }
+
+/* 7. Modelos: gesto horizontal y mascota ---------------------------------- */
+.product-visual { touch-action: pan-y; }
+
+/* Brasa abre el selector, pero solo cuando está a la vista y fuera de sus
+   demostraciones; nunca intercepta un toque dirigido a otro botón. */
+.brasa-guide .brasa-button { pointer-events: auto; }
+.brasa-guide.is-away .brasa-button,
+.brasa-guide.is-finale .brasa-button,
+.brasa-guide[data-motion-phase='welcome'] .brasa-button,
+.scroll-onboarding .brasa-guide .brasa-button { pointer-events: none; }
+
+/* 8. Entrada de secciones -------------------------------------------------- */
+[data-reveal] {
+  opacity: 0;
+  translate: 0 22px;
+  transition: opacity .8s cubic-bezier(.2, .7, .2, 1), translate 1s cubic-bezier(.2, .7, .2, 1);
+}
+[data-reveal].is-in { opacity: 1; translate: 0 0; }
+
+/* 9. Áreas táctiles que quedaban por debajo de 44 px ---------------------- */
+footer > a:not(.logo),
+.film-controls a,
+.source-note > a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+@media (min-width: 761px) {
+  .header-phone,
+  .time-footer > a { display: inline-flex; align-items: center; min-height: 44px; }
+}
+.site-credits summary,
+.source-note summary { min-height: 44px; display: flex; align-items: center; cursor: pointer; }
+.site-credits summary::before,
+.source-note summary::before { content: '▸'; margin-right: 8px; font-size: .9em; transition: rotate .2s; }
+.site-credits[open] summary::before,
+.source-note[open] summary::before { rotate: 90deg; }
+.site-credits summary::-webkit-details-marker,
+.source-note summary::-webkit-details-marker { display: none; }
+.site-credits summary,
+.source-note summary { list-style: none; }
+
+/* 9b. Contraste de textos pequeños (antes entre 2,8:1 y 4,4:1; ahora ≥ 4,5:1).
+       Mismo tono, un punto más oscuro o más claro según el fondo. */
+.time-journey .eyebrow,
+.gain-strip span,
+.secondary-metric,
+.time-right > p,
+.process-note { color: #55644a; }
+.time-footer > a { color: #46573a; opacity: 1; }
+.gallery-position { opacity: 1; color: #8a938a; }
+.experience-unox .gallery-position { color: #8593a8; }
+.tab-count { opacity: .72; }
+.model-tabs button[aria-pressed='true'] .tab-count { opacity: .8; }
+
+/* 10. Móvil ---------------------------------------------------------------- */
+@media (max-width: 760px) {
+  /* Recorrido más corto: menos pantalla fijada por modelo (antes 340 y 420 svh). */
+  .qbo-story { height: 250svh; }
+  .unox-journey { height: 320svh; }
+
+  /* El botón nuevo no desplaza el titular: el bloque baja lo que ocupa el botón. */
+  .film-copy { bottom: 14.5%; }
+  .oven-intro-copy { bottom: 15.5%; }
+  .hero-finder { margin-top: 20px; min-height: 46px; }
+  .finder-chip { min-height: 44px; padding: 0 14px; }
+  .story-heading { min-height: 44px; }
+
+  .contact-dock { padding: 6px; gap: 6px; }
+  .contact-dock > .dock-finder { flex: 1; margin-right: 0; padding-right: 6px; }
+  .dock-text small { font-size: 9.5px; }
+
+  /* El selector sube desde abajo: las opciones quedan al alcance del pulgar. */
+  .finder {
+    width: 100%;
+    max-width: none;
+    margin: auto 0 0;
+    padding: 14px 20px calc(22px + env(safe-area-inset-bottom));
+    border-radius: 24px 24px 0 0;
+    border-width: 1px 0 0;
+    max-height: calc(100dvh - 40px);
+  }
+  @starting-style {
+    .finder[open] { translate: 0 60px; }
+  }
+  .finder-progress { margin: 10px 0 20px; }
+  .finder-result { grid-template-columns: 104px 1fr; gap: 16px; }
+  .finder-result .finder-thumb { width: 104px; height: 104px; }
+  .finale-finder { justify-content: center; width: 100%; }
+
+  /* El contacto cabe en una pantalla: titular y márgenes algo más contenidos. */
+  #demo-dialog { padding: 26px 22px 22px; }
+  #demo-dialog h2 { font-size: 32px; margin: 12px 0 10px; }
+  #demo-dialog > p { margin: 0; }
+  #demo-dialog #contact-form { gap: 14px; margin-top: 18px; }
+  #demo-dialog #contact-idea { min-height: 0; height: 68px; }
+  .contact-context > div { min-height: 40px; padding: 4px 0; }
+}
+
+@media (max-width: 380px) {
+  .dock-brasa { width: 32px; height: 32px; }
+  .dock-brasa svg { width: 19px; height: 19px; }
+  .contact-dock > .dock-finder { gap: 8px; }
+  .finder-actions { grid-template-columns: 1fr; }
+  .finder-option { font-size: 14px; }
+}
+
+/* Pantallas bajas: el selector nunca tapa toda la altura útil. */
+@media (max-height: 560px) {
+  .finder .finder-question { font-size: 24px; }
+  .finder-options { margin-top: 14px; }
+  .finder-option { min-height: 46px; }
+}
+
+/* Móvil apaisado: sin recorrido fijado (como en la versión anterior). De paso
+   se corrige un solape que ya existía en UNOX: el escenario medía 100svh fijos
+   y las pestañas de modelo quedaban encima del botón «Verlo en mi cocina». */
+@media (max-height: 500px) and (orientation: landscape) {
+  .qbo-story,
+  .unox-journey { height: auto; }
+  .unox-journey .product-stage { height: auto; min-height: 100svh; }
+  .film-copy { bottom: 27%; }
+  .hero-finder { display: none; }
+}
+
+/* 11. Movimiento reducido -------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  dialog[open],
+  dialog::backdrop,
+  .finder-progress span,
+  .hero-finder,
+  .finder-chip,
+  .finder-option { transition: none; }
+  .finder-host { animation: none; }
+  [data-reveal] { opacity: 1; translate: none; transition: none; }
+  .brasa-guide .brasa-button { pointer-events: none; }
+  /* Sin recorrido fijado, como en el resto de la web. */
+  .qbo-story,
+  .unox-journey { height: auto; }
+}

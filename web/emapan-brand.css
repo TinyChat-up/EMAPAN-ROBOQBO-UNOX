@@ -4,7 +4,7 @@
 .logo .emapan-logo-caption{display:block;margin:0 0 0 55px;font-size:7px;font-weight:400;letter-spacing:3.3px;line-height:1.4;color:#c9cec6}
 footer{position:relative;isolation:isolate;overflow:hidden;background:#101612;border-top:1px solid #ffffff12}
 .experience-unox footer{background:#080e18}
-footer:before{content:'';position:absolute;z-index:-1;inset:0 0 0 auto;width:min(780px,75%);background:url('assets/emapan-pattern-original.png') right center / auto 100% no-repeat;opacity:.065;filter:grayscale(1);-webkit-mask-image:linear-gradient(90deg,transparent,#000 65%);mask-image:linear-gradient(90deg,transparent,#000 65%);pointer-events:none}
+footer:before{content:'';position:absolute;z-index:-1;inset:0 0 0 auto;width:min(780px,75%);background:url('assets/opt/emapan-pattern.webp') right center / auto 100% no-repeat;opacity:.065;filter:grayscale(1);-webkit-mask-image:linear-gradient(90deg,transparent,#000 65%);mask-image:linear-gradient(90deg,transparent,#000 65%);pointer-events:none}
 footer .logo.emapan-signature{width:220px;min-height:74px}
 footer .logo .emapan-logo-art{height:62px}
 footer .logo .emapan-logo-caption{margin-left:68px;font-size:8px;letter-spacing:4px}
