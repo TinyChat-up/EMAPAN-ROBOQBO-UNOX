@@ -108,7 +108,7 @@ h2 { margin: .55rem 0 0; }
   .intro-copy h1 { font-size: clamp(2.2rem,8.5vw,3.5rem); margin: .65rem 0 1.1rem; }
   .intro-copy h1 br { display: none; }
   .brand-mark { width: 6.5rem; }
-  #playback { left: auto; right: .75rem; bottom: 1.6rem; font-size: .85rem; }
+  #playback { top: .5rem; left: .65rem; right: auto; bottom: auto; font-size: .8rem; }
   .families { grid-template-columns: repeat(2,minmax(0,1fr)); }
   .family { display: flex; flex-direction: column; align-items: stretch; }
   .family img { aspect-ratio: 1.55; object-fit: contain; }
