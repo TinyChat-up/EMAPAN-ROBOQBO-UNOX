@@ -58,22 +58,54 @@ document.querySelectorAll('[data-equipo]').forEach(link => {
   });
 });
 
-document.querySelectorAll('.product-photo').forEach(figure => {
-  const button = figure.querySelector('button');
-  const photo = figure.querySelector('img');
-  const status = figure.querySelector('figcaption');
-  button.hidden = false;
-  button.addEventListener('click', () => {
-    button.hidden = true;
-    status.textContent = 'Cargando fotografía…';
-    photo.addEventListener('load', () => {
-      photo.hidden = false;
-      status.textContent = photo.alt;
-    }, { once: true });
-    photo.addEventListener('error', () => {
-      status.textContent = 'La fotografía no está disponible. Puedes consultar la ficha del equipo.';
-    }, { once: true });
-    photo.referrerPolicy = 'no-referrer';
-    photo.src = figure.dataset.src;
-  }, { once: true });
+// Mantén la documentación accesible cuando el servidor de la foto no responda.
+for (const photo of document.querySelectorAll('.machine-photo')) {
+  function showImageStatus() {
+    const stage = photo.closest('figure');
+    const failed = !photo.naturalWidth;
+    stage.classList.toggle('photo-unavailable', failed);
+    stage.querySelector('.photo-fallback').hidden = !failed;
+    stage.querySelector('figcaption').textContent = failed
+      ? 'Fotografía no disponible'
+      : 'Fotografía de referencia';
+  }
+  photo.addEventListener('load', showImageStatus);
+  photo.addEventListener('error', showImageStatus);
+  if (photo.complete) showImageStatus();
+}
+
+const film = document.querySelector('.vapor');
+const filmControl = document.querySelector('#film-control');
+const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+let requested = !reduced.matches && !navigator.connection?.saveData;
+let visible = false;
+
+function syncPlayback() {
+  if (!requested || !visible || document.hidden) {
+    film.pause();
+    return;
+  }
+  if (!film.hasAttribute('src')) film.src = film.dataset.film;
+  film.play().catch(() => {});
+}
+
+function labelControl() {
+  filmControl.textContent = film.paused ? 'Reproducir vapor' : 'Pausar vapor';
+}
+filmControl.hidden = false;
+film.addEventListener('play', labelControl);
+film.addEventListener('pause', labelControl);
+film.addEventListener('error', () => { filmControl.hidden = true; });
+filmControl.addEventListener('click', () => {
+  requested = film.paused;
+  syncPlayback();
 });
+reduced.addEventListener('change', () => {
+  requested = !reduced.matches && !navigator.connection?.saveData;
+  syncPlayback();
+});
+new IntersectionObserver(([entry]) => {
+  visible = entry.isIntersecting;
+  syncPlayback();
+}).observe(film);
+document.addEventListener('visibilitychange', syncPlayback);

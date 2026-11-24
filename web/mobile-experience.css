@@ -24,9 +24,18 @@ body.in-product .contact-dock,body.in-times .contact-dock{opacity:0;pointer-even
 .oven-intro-footer{align-items:center}.film-controls{align-items:center}
 @media(max-width:760px){.oven-intro-footer{padding-bottom:env(safe-area-inset-bottom)}.film-controls{padding-bottom:env(safe-area-inset-bottom)}}
 
-/* Deja sitio para las tres marcas y el control de la guía. */
+/* Dos columnas laterales iguales mantienen el selector en el centro de la pantalla. */
+@media (max-width: 760px) {
+  header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  }
+  header .logo.emapan-signature { max-width: 100%; }
+  header .brand-switch { margin: 0; }
+  header .header-actions { justify-self: end; }
+}
+
 @media (max-width: 420px) {
   header { padding-inline: 8px; gap: 4px; }
-  header .logo.emapan-signature { flex-shrink: 1; min-width: 60px; }
   header .brand-switch a { padding-inline: 7px; }
 }
