@@ -44,9 +44,6 @@ h2 { font-size: clamp(2.5rem,5vw,5rem); }
 .machine-stage { position: relative; width: 100%; aspect-ratio: 4/3; background: #cfd0d2; overflow: hidden; }
 .machine-stage img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
 .machine-photo { background: white; }
-.photo-unavailable .machine-photo { display: none; }
-.photo-unavailable { aspect-ratio: auto; min-height: 5.5rem; display: grid; place-content: center; gap: .4rem; text-align: center; }
-.photo-fallback { font-size: .85rem; }
 .machine-copy { flex: 1; display: flex; flex-direction: column; align-items: start; padding: clamp(1rem,2vw,2rem); }
 .machine-copy h3 { font-size: clamp(1.65rem,2.4vw,2.8rem); margin: .65rem 0 1rem; }
 .machine-copy p { line-height: 1.55; }
@@ -56,7 +53,7 @@ summary { cursor: pointer; font-weight: 600; }
 .machine-copy details a, .machine-copy small { display: block; }
 .machine-contact { display: inline-flex; align-items: center; min-height: 44px; gap: .65rem; margin-top: auto; font-weight: 600; }
 .source-note { margin: 1.4rem 0 0; max-width: 85ch; color: #49545a; font-size: .85rem; }
-.catalogue { background: #dce4e5; }
+.catalogue { background: white; padding: clamp(2.6rem,6vw,6rem) var(--gutter); }
 .entry .label { margin-bottom: 1rem; }
 .resource,.channel,.by-phone a { display: flex; align-items: center; gap: .5rem; width: fit-content; min-height: 44px; }
 .resource { margin-top: 1rem; font-weight: bold; }
@@ -80,8 +77,40 @@ footer { display: flex; justify-content: space-between; padding: 2rem var(--gutt
   html { scroll-behavior: smooth; }
 }
 
-.machine-stage figcaption { position: absolute; bottom: .45rem; left: .7rem; font-size: .72rem; color: #33444d; background: #f7f9f9e8; padding: .12rem .38rem; }
-.machine-stage.photo-unavailable figcaption { position: static; background: transparent; }
 
-.official-links { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem 1.25rem; }
-.official-links a { display: inline-flex; align-items: center; min-height: 44px; }
+
+.intro-panel { min-height: clamp(28rem,64svh,50rem); background: #111; }
+#film, .intro-panel::after { position: absolute; inset: 0; width: 100%; height: 100%; }
+#film { object-fit: cover; z-index: -2; }
+.intro-panel::after { content: ''; z-index: -1; background: linear-gradient(90deg,#000b,transparent 72%),linear-gradient(0deg,#0006,transparent 45%); }
+.brand-mark { display: block; width: clamp(7.5rem,12vw,11rem); height: auto; filter: invert(1); }
+h1 { font-size: clamp(3.4rem,7.5vw,8rem); margin: 1.2rem 0 1.6rem; line-height: .94; }
+h2 { margin: .55rem 0 0; }
+#playback { position: absolute; right: var(--gutter); bottom: 1rem; min-height: 44px; padding: .5rem 1rem; border: 1px solid #fffa; border-radius: 2rem; color: white; background: #161616bc; cursor: pointer; }
+.machine-stage, .machine-photo { background: #f5f5f5; }
+.machine-copy h3 span { display: block; font-size: .54em; line-height: 1.5; letter-spacing: 0; margin-top: .3rem; }
+.machine-copy dl { width: 100%; margin: .25rem 0; }
+.machine-copy dt { margin-top: .55rem; font-size: .8rem; }
+.machine-copy dd { margin: 0; font-weight: 650; }
+.families { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: clamp(.65rem,1.5vw,1.5rem); }
+.family { display: grid; grid-template-columns: 40% 1fr; align-items: center; background: #f5f5f5; text-decoration: none; color: #171717; }
+.family img { width: 100%; height: auto; }
+.family span { padding: .6rem; }
+.family strong,.family small { display: block; }
+.family strong { font-size: clamp(1rem,1.5vw,1.4rem); letter-spacing: -.035em; }
+.family small { margin-top: .3rem; font-size: .8rem; line-height: 1.3; }
+.family:hover strong, .family:focus-visible strong { text-decoration: underline; }
+@media(max-width:760px) {
+  .intro-panel { display: block; min-height: 0; padding: 0; background: #090c14; }
+  #film { position: relative; display: block; aspect-ratio: 1.8; height: auto; object-position: 73% center; }
+  .intro-panel::after { display: none; }
+  .intro-copy { padding: 1.3rem var(--gutter) 1.6rem; }
+  .intro-copy h1 { font-size: clamp(2.2rem,8.5vw,3.5rem); margin: .65rem 0 1.1rem; }
+  .intro-copy h1 br { display: none; }
+  .brand-mark { width: 6.5rem; }
+  #playback { left: auto; right: .75rem; bottom: 1.6rem; font-size: .85rem; }
+  .families { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .family { display: flex; flex-direction: column; align-items: stretch; }
+  .family img { aspect-ratio: 1.55; object-fit: contain; }
+  .family span { padding: .65rem .8rem 1rem; }
+}

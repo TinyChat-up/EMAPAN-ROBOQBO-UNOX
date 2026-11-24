@@ -58,18 +58,37 @@ document.querySelectorAll('[data-equipo]').forEach(link => {
   });
 });
 
-// Mantén la documentación accesible cuando el servidor de la foto no responda.
-for (const photo of document.querySelectorAll('.machine-photo')) {
-  function showImageStatus() {
-    const stage = photo.closest('figure');
-    const failed = !photo.naturalWidth;
-    stage.classList.toggle('photo-unavailable', failed);
-    stage.querySelector('.photo-fallback').hidden = !failed;
-    stage.querySelector('figcaption').textContent = failed
-      ? 'Fotografía no disponible'
-      : 'Fotografía de referencia';
+
+// La portada es suficiente para movimiento reducido y ahorro de datos.
+const film = document.getElementById('film');
+const playback = document.getElementById('playback');
+const motion = matchMedia('(prefers-reduced-motion: reduce)');
+let wantsPlayback = !motion.matches && !navigator.connection?.saveData;
+let inView = false;
+
+function updateFilm() {
+  if (!wantsPlayback || !inView || document.hidden) {
+    film.pause();
+    return;
   }
-  photo.addEventListener('load', showImageStatus);
-  photo.addEventListener('error', showImageStatus);
-  if (photo.complete) showImageStatus();
+  if (!film.hasAttribute('src')) film.src = film.dataset.film;
+  film.play().catch(() => {});
 }
+
+playback.hidden = false;
+playback.addEventListener('click', () => {
+  wantsPlayback = film.paused;
+  updateFilm();
+});
+film.addEventListener('play', () => { playback.textContent = 'Pausar vídeo'; });
+film.addEventListener('pause', () => { playback.textContent = 'Reproducir vídeo'; });
+film.addEventListener('error', () => { playback.hidden = true; });
+motion.addEventListener('change', () => {
+  wantsPlayback = !motion.matches && !navigator.connection?.saveData;
+  updateFilm();
+});
+new IntersectionObserver(([entry]) => {
+  inView = entry.isIntersecting;
+  updateFilm();
+}).observe(film);
+document.addEventListener('visibilitychange', updateFilm);

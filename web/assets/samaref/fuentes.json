@@ -1,0 +1,94 @@
+{
+  "catalogue": "https://samaref.it/es/productos/pasteleria-y-panaderia/",
+  "logo": {
+    "file": "samaref.svg",
+    "source": "https://samaref.it/es",
+    "location": "SVG de la cabecera"
+  },
+  "opening": {
+    "file": "video.mp4",
+    "poster": "poster.webp",
+    "source_page": "https://samaref.it/es",
+    "source_video": "https://player.vimeo.com/video/1153905550",
+    "excerpt": "0–19,4 s del vídeo de presentación corporativa. Portada extraída del primer fotograma. H.264 sin audio."
+  },
+  "families": [
+    {
+      "name": "Talent",
+      "webp": "linea-talent.webp",
+      "original": "https://samaref.it/public/images/catalog/tI_ISJ4WuQU5DPCxI86pZ5KbBbiemv8Y.webp",
+      "page": "https://samaref.it/es/productos/pasteleria-y-panaderia/talent/"
+    },
+    {
+      "name": "Talent Roll-In",
+      "webp": "linea-talent-roll-in.webp",
+      "original": "https://samaref.it/public/images/catalog/CpWPefitHWfe5MaYmDL1o-32TMznbvT8.webp",
+      "page": "https://samaref.it/es/productos/pasteleria-y-panaderia/talent-roll-in/"
+    },
+    {
+      "name": "Polar",
+      "webp": "linea-polar.webp",
+      "original": "https://samaref.it/public/images/catalog/DBYGCm31Mi6_b6546VZXyc0MiK_oV6TJ.webp",
+      "page": "https://samaref.it/es/productos/pasteleria-y-panaderia/polar/"
+    },
+    {
+      "name": "Evolution",
+      "webp": "linea-evolution.webp",
+      "original": "https://samaref.it/public/images/catalog/zxKBS88R6hFt8guqoc4zB0hAcgH4Tb0t.webp",
+      "page": "https://samaref.it/es/productos/pasteleria-y-panaderia/evolution/"
+    },
+    {
+      "name": "Evolution Roll-In",
+      "webp": "linea-evolution-roll-in.webp",
+      "original": "https://samaref.it/public/images/catalog/-1XqNlsXM-Mw_E_HwyaVFY0tyEOxLvCX.webp",
+      "page": "https://samaref.it/es/productos/pasteleria-y-panaderia/evolution-roll-in/"
+    },
+    {
+      "name": "Chocolate",
+      "webp": "linea-chocolate.webp",
+      "original": "https://samaref.it/public/images/catalog/ndlpLJVSKpfGiteRUmr5nCV2QY-OarJT.webp",
+      "page": "https://samaref.it/es/productos/pasteleria-y-panaderia/chocolate/"
+    },
+    {
+      "name": "Delizia",
+      "webp": "linea-delizia.webp",
+      "original": "https://samaref.it/public/images/catalog/7embhG3LhDcfkQru34iIlQO4T0ZlY6PT.webp",
+      "page": "https://samaref.it/es/productos/pasteleria-y-panaderia/delizia/"
+    },
+    {
+      "name": "Elite",
+      "webp": "linea-elite.webp",
+      "original": "https://samaref.it/public/images/catalog/UliUmKibDtehrNuITZaudJVa97MnOCmw.webp",
+      "page": "https://samaref.it/es/productos/pasteleria-y-panaderia/elite/"
+    },
+    {
+      "name": "Dynamic",
+      "webp": "linea-dynamic.webp",
+      "original": "https://samaref.it/public/images/catalog/y4rV7fYHMXWAt_7IzbqYgu_HnQDMkZOP.webp",
+      "page": "https://samaref.it/es/productos/pasteleria-y-panaderia/dynamic/"
+    }
+  ],
+  "models": [
+    {
+      "name": "Talent TA 6T P BK",
+      "webp": "ta-6t-p-bk.webp",
+      "original": "https://samaref.it/public/filemanager/source/listini/pasticceria_e_panificazione/talent/ta6tbk/TA_6T_P_BK.jpg",
+      "page": "https://samaref.it/es/productos/pasteleria-y-panaderia/talent/ta6tbk/ta-6t-p-bk/",
+      "pdf": "https://samaref.it/es/utility/creapdf?id%5Boid%5D=6a3900526c4ce54b8f0b66fa&lang=es"
+    },
+    {
+      "name": "Evolution EV 700 P TN",
+      "webp": "ev-700-p-tn.webp",
+      "original": "https://samaref.it/public/filemanager/source/listini/pasticceria_e_panificazione/evolution/ev700/EV_700_P_TN.jpg",
+      "page": "https://samaref.it/es/productos/pasteleria-y-panaderia/evolution/ev700/ev-700-p-tn/",
+      "pdf": "https://samaref.it/es/utility/creapdf?id%5Boid%5D=6a39004c6c4ce54b8f0b653f&lang=es"
+    },
+    {
+      "name": "Dynamic TD2 P PL TN",
+      "webp": "td2-p-pl-tn.webp",
+      "original": "https://samaref.it/public/filemanager/source/listini/pasticceria_e_panificazione/dynamic/td2/TD2_P_PL_TN.jpg",
+      "page": "https://samaref.it/es/productos/pasteleria-y-panaderia/dynamic/td2/td2-p-pl-tn/",
+      "pdf": "https://samaref.it/es/utility/creapdf?id%5Boid%5D=6a39004f6c4ce54b8f0b6633&lang=es"
+    }
+  ]
+}
