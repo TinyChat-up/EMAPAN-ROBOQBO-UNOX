@@ -23,3 +23,10 @@ body.in-product .contact-dock,body.in-times .contact-dock{opacity:0;pointer-even
 .experience-qbo .finale-speech h2 em{color:#527137}.experience-qbo .finale-speech p{color:#596750}
 .oven-intro-footer{align-items:center}.film-controls{align-items:center}
 @media(max-width:760px){.oven-intro-footer{padding-bottom:env(safe-area-inset-bottom)}.film-controls{padding-bottom:env(safe-area-inset-bottom)}}
+
+/* Deja sitio para las tres marcas y el control de la guía. */
+@media (max-width: 420px) {
+  header { padding-inline: 8px; gap: 4px; }
+  header .logo.emapan-signature { flex-shrink: 1; min-width: 60px; }
+  header .brand-switch a { padding-inline: 7px; }
+}
