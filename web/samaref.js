@@ -73,39 +73,3 @@ for (const photo of document.querySelectorAll('.machine-photo')) {
   photo.addEventListener('error', showImageStatus);
   if (photo.complete) showImageStatus();
 }
-
-const film = document.querySelector('.vapor');
-const filmControl = document.querySelector('#film-control');
-const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-let requested = !reduced.matches && !navigator.connection?.saveData;
-let visible = false;
-
-function syncPlayback() {
-  if (!requested || !visible || document.hidden) {
-    film.pause();
-    return;
-  }
-  if (!film.hasAttribute('src')) film.src = film.dataset.film;
-  film.play().catch(() => {});
-}
-
-function labelControl() {
-  filmControl.textContent = film.paused ? 'Reproducir vapor' : 'Pausar vapor';
-}
-filmControl.hidden = false;
-film.addEventListener('play', labelControl);
-film.addEventListener('pause', labelControl);
-film.addEventListener('error', () => { filmControl.hidden = true; });
-filmControl.addEventListener('click', () => {
-  requested = film.paused;
-  syncPlayback();
-});
-reduced.addEventListener('change', () => {
-  requested = !reduced.matches && !navigator.connection?.saveData;
-  syncPlayback();
-});
-new IntersectionObserver(([entry]) => {
-  visible = entry.isIntersecting;
-  syncPlayback();
-}).observe(film);
-document.addEventListener('visibilitychange', syncPlayback);
