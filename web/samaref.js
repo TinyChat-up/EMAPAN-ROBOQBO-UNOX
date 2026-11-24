@@ -29,3 +29,23 @@ function scheduleUpdate() {
 window.addEventListener('scroll', scheduleUpdate, { passive: true });
 window.addEventListener('resize', scheduleUpdate);
 updateChapter();
+
+// WhatsApp se abre solo al seguir el enlace y permite editar el mensaje.
+const brief = document.querySelector('#brief');
+const whatsapp = document.querySelector('#whatsapp');
+const destination = new URL(whatsapp.href);
+const greeting = destination.searchParams.get('text');
+
+function prepareMessage() {
+  const activity = brief.elements.actividad.value;
+  const detail = brief.elements.detalle.value.trim();
+  const lines = [greeting];
+  if (activity) lines.push('Mi actividad: ' + activity + '.');
+  if (detail) lines.push(detail);
+  destination.searchParams.set('text', lines.join('\n'));
+  whatsapp.href = destination.href;
+}
+
+brief.hidden = false;
+brief.addEventListener('input', prepareMessage);
+window.addEventListener('pageshow', prepareMessage);

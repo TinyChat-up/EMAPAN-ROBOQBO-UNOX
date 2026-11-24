@@ -4,9 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Samaref · Pastelería y panadería | EMAPAN</title>
-  <meta name="description" content="Consulta la gama de pastelería y panadería de Samaref desde EMAPAN. Accede al catálogo en español y al canal oficial del fabricante.">
+  <meta name="description" content="Consulta la gama de pastelería y panadería de Samaref desde EMAPAN. Compara las necesidades de tu obrador y prepara una consulta con EMAPAN.">
   <link rel="canonical" href="https://www.satemapan.com/samaref.html">
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon.ico?v=2" sizes="16x16 32x32 48x48">
+  <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png?v=2">
+  <link rel="icon" type="image/svg+xml" sizes="any" href="/favicon.svg?v=2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2">
   <link rel="stylesheet" href="samaref.css">
   <script src="samaref.js" defer></script>
 </head>
@@ -25,22 +28,52 @@
         <div class="cover-copy">
           <p class="maker">Samaref</p>
           <h1 id="titulo">Pastelería<br><em>y panadería</em></h1>
-          <a class="button" href="#catalogo">Explorar la gama <span aria-hidden="true">↓</span></a>
+          <p class="intro">¿Qué necesitas en tu obrador? Consulta la gama y cuéntanos cómo trabajas.</p>
+          <div class="actions">
+            <a class="button" href="#consulta">Pedir asesoramiento <img class="arrow down" src="assets/icons/arrow-up-right.svg" width="18" height="18" alt=""></a>
+            <a class="secondary" href="#catalogo">Consultar el catálogo</a>
+          </div>
         </div>
       </div>
     </section>
     <nav class="chapters" aria-label="Capítulos de Samaref">
-      <a href="#gama">La gama</a><a href="#catalogo">Catálogo</a><a href="#canal">Canal oficial</a>
+      <a href="#gama">La gama</a><a href="#catalogo">Catálogo</a><a href="#criterios">Comparar</a><a href="#consulta">Contacto</a>
     </nav>
     <section id="catalogo" class="entry" aria-labelledby="catalogo-titulo">
-      <div><p class="label">Samaref / Documentación</p><h2 id="catalogo-titulo">El catálogo</h2></div>
-      <div><p>Consulta la selección de pastelería y panadería en el catálogo en español de Samaref.</p>
-        <a class="resource" href="https://samaref.it/es/productos/pasteleria-y-panaderia/">Ver la gama en Samaref <span aria-hidden="true">↗</span></a></div>
+      <div><p class="label">Samaref</p><h2 id="catalogo-titulo">El catálogo</h2></div>
+      <div><p>Busca la gama de pastelería y panadería en la web del fabricante. Si te interesa un equipo, guarda su nombre o el enlace para comentarlo con EMAPAN.</p>
+        <a class="resource" href="https://samaref.it/es/productos/pasteleria-y-panaderia/">Abrir el catálogo en español <img class="arrow" src="assets/icons/arrow-up-right.svg" width="18" height="18" alt=""></a>
+        <a class="channel" id="canal" href="https://www.youtube.com/@thesamaref">Canal oficial en YouTube <img class="arrow" src="assets/icons/arrow-up-right.svg" width="18" height="18" alt=""></a>
+      </div>
     </section>
-    <section id="canal" class="entry" aria-labelledby="canal-titulo">
-      <div><p class="label">Samaref / Vídeos</p><h2 id="canal-titulo">Canal oficial</h2></div>
-      <div><p>Explora los vídeos que publica el fabricante en su canal de YouTube.</p>
-        <a class="resource" href="https://www.youtube.com/@thesamaref">Visitar @thesamaref <span aria-hidden="true">↗</span></a></div>
+    <section id="criterios" class="entry criteria" aria-labelledby="criterios-titulo">
+      <div><p class="label">Guía de EMAPAN</p><h2 id="criterios-titulo">Antes de elegir</h2></div>
+      <dl>
+        <dt>Elaboración y tiempos</dt>
+        <dd>¿Qué preparas por la mañana y qué dejas listo para el día siguiente? Anota en qué paso necesitas ayuda.</dd>
+        <dt>Bandejas por tanda</dt>
+        <dd>Apunta el formato de tus bandejas y cuántas usas a la vez en un día de máxima producción. Contrasta ambos datos con la ficha del equipo.</dd>
+        <dt>Espacio disponible</dt>
+        <dd>Mide el hueco, el paso de entrada y el espacio de apertura. Pregunta qué margen necesita la instalación.</dd>
+      </dl>
+    </section>
+    <section id="consulta" class="entry contact" aria-labelledby="consulta-titulo">
+      <div><p class="label">Asesoramiento EMAPAN</p><h2 id="consulta-titulo">Hablemos de<br>tu obrador.</h2>
+        <p class="by-phone">¿Prefieres llamar?<br><a href="tel:+34615619104">615 619 104</a></p>
+      </div>
+      <div>
+        <form id="brief" hidden>
+          <label for="actividad">¿A qué se dedica tu obrador?</label>
+          <select id="actividad" name="actividad">
+            <option value="">Selecciona si lo deseas</option>
+            <option>Pastelería</option><option>Panadería</option><option>Pastelería y panadería</option>
+          </select>
+          <label for="detalle">¿Qué quieres consultar? <small>(opcional)</small></label>
+          <textarea id="detalle" name="detalle" maxlength="600" rows="3" placeholder="Por ejemplo, el modelo que has visto o cuántas bandejas preparas por tanda."></textarea>
+        </form>
+        <a class="button" id="whatsapp" href="https://wa.me/34615619104?text=Hola%2C%20EMAPAN.%20Me%20interesa%20la%20gama%20Samaref%20de%20pasteler%C3%ADa%20y%20panader%C3%ADa.">Continuar en WhatsApp <img class="arrow" src="assets/icons/arrow-up-right.svg" width="18" height="18" alt=""></a>
+        <p class="note">Podrás revisar el mensaje en WhatsApp antes de enviarlo.</p>
+      </div>
     </section>
   </main>
   <footer><a href="/">Volver a EMAPAN</a><a href="#gama">Volver arriba ↑</a></footer>
