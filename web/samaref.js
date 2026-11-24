@@ -41,6 +41,7 @@ function prepareMessage() {
   const detail = brief.elements.detalle.value.trim();
   const lines = [greeting];
   if (activity) lines.push('Mi actividad: ' + activity + '.');
+  if (brief.elements.equipo.value) lines.push('Referencia: ' + brief.elements.equipo.value + '.');
   if (detail) lines.push(detail);
   destination.searchParams.set('text', lines.join('\n'));
   whatsapp.href = destination.href;
@@ -49,3 +50,30 @@ function prepareMessage() {
 brief.hidden = false;
 brief.addEventListener('input', prepareMessage);
 window.addEventListener('pageshow', prepareMessage);
+
+document.querySelectorAll('[data-equipo]').forEach(link => {
+  link.addEventListener('click', () => {
+    brief.elements.equipo.value = link.dataset.equipo;
+    prepareMessage();
+  });
+});
+
+document.querySelectorAll('.product-photo').forEach(figure => {
+  const button = figure.querySelector('button');
+  const photo = figure.querySelector('img');
+  const status = figure.querySelector('figcaption');
+  button.hidden = false;
+  button.addEventListener('click', () => {
+    button.hidden = true;
+    status.textContent = 'Cargando fotografía…';
+    photo.addEventListener('load', () => {
+      photo.hidden = false;
+      status.textContent = photo.alt;
+    }, { once: true });
+    photo.addEventListener('error', () => {
+      status.textContent = 'La fotografía no está disponible. Puedes consultar la ficha del equipo.';
+    }, { once: true });
+    photo.referrerPolicy = 'no-referrer';
+    photo.src = figure.dataset.src;
+  }, { once: true });
+});
