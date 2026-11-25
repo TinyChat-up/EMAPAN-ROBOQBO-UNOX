@@ -2,10 +2,40 @@
 const chapters = [...document.querySelectorAll('.chapters a')];
 const sections = chapters.map(link => document.querySelector(link.hash));
 const chapterNav = document.querySelector('.chapters');
+const models = [...document.querySelectorAll('.machines .machine')];
+const modelLinks = [...document.querySelectorAll('.model-nav a')];
+const modelStage = document.querySelector('.model-stage');
+const modelNav = document.querySelector('.model-nav');
+let selectedModel = -1;
 let scheduled = false;
+
+// Los artículos mantienen el contenido y sus enlaces en el flujo de lectura.
+for (const model of models) {
+  const image = model.querySelector('figure img').cloneNode();
+  image.alt = '';
+  modelStage.append(image);
+}
+document.querySelector('.showroom').classList.add('with-stage');
+
+function updateModel() {
+  const margin = parseFloat(getComputedStyle(models[0]).scrollMarginTop) || 0;
+  const marker = margin + Math.max(1, window.innerHeight - margin) * 0.35;
+  let active = 0;
+  models.forEach((model, index) => {
+    if (model.getBoundingClientRect().top <= marker) active = index;
+  });
+  if (active === selectedModel) return;
+  selectedModel = active;
+  modelLinks.forEach((link, index) => {
+    modelStage.children[index].classList.toggle('is-current', index === active);
+    if (index === active) link.setAttribute('aria-current', 'location');
+    else link.removeAttribute('aria-current');
+  });
+}
 
 function updateChapter() {
   scheduled = false;
+  updateModel();
   const marker = chapterNav.offsetHeight + window.innerHeight * 0.25;
   let active = 0;
   sections.forEach((section, index) => {
@@ -28,6 +58,17 @@ function scheduleUpdate() {
 
 window.addEventListener('scroll', scheduleUpdate, { passive: true });
 window.addEventListener('resize', scheduleUpdate);
+const showroom = document.querySelector('.showroom');
+function measureNavigation() {
+  showroom.style.setProperty('--chapter-height', chapterNav.offsetHeight + 'px');
+  showroom.style.setProperty('--model-nav-height', modelNav.offsetHeight + 'px');
+  scheduleUpdate();
+}
+const geometry = new ResizeObserver(measureNavigation);
+geometry.observe(chapterNav);
+geometry.observe(modelNav);
+geometry.observe(document.querySelector('.machines'));
+measureNavigation();
 updateChapter();
 
 // WhatsApp se abre solo al seguir el enlace y permite editar el mensaje.
