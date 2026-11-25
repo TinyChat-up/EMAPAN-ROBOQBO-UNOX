@@ -51,7 +51,6 @@ h2 { font-size: clamp(2.5rem,5vw,5rem); }
 summary, .machine-copy details a { padding-block: .75rem; }
 summary { cursor: pointer; font-weight: 600; }
 .machine-copy details a, .machine-copy small { display: block; }
-.machine-contact { display: inline-flex; align-items: center; min-height: 44px; gap: .65rem; margin-top: auto; font-weight: 600; }
 .source-note { margin: 1.4rem 0 0; max-width: 85ch; color: #49545a; font-size: .85rem; }
 .catalogue { background: white; padding: clamp(2.6rem,6vw,6rem) var(--gutter); }
 .entry .label { margin-bottom: 1rem; }
@@ -92,14 +91,14 @@ h2 { margin: .55rem 0 0; }
 .machine-copy dl { width: 100%; margin: .25rem 0; }
 .machine-copy dt { margin-top: .55rem; font-size: .8rem; }
 .machine-copy dd { margin: 0; font-weight: 650; }
-.families { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: clamp(.65rem,1.5vw,1.5rem); }
-.family { display: grid; grid-template-columns: 40% 1fr; align-items: center; background: #f5f5f5; text-decoration: none; color: #171717; }
+.families { align-items: start; display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: clamp(.65rem,1.5vw,1.5rem); }
+.family > summary { display: grid; grid-template-columns: 40% 1fr; align-items: center; background: #f5f5f5; text-decoration: none; color: #171717; }
 .family img { width: 100%; height: auto; }
-.family span { padding: .6rem; }
+.family-name { padding: .6rem; }
 .family strong,.family small { display: block; }
 .family strong { font-size: clamp(1rem,1.5vw,1.4rem); letter-spacing: -.035em; }
 .family small { margin-top: .3rem; font-size: .8rem; line-height: 1.3; }
-.family:hover strong, .family:focus-visible strong { text-decoration: underline; }
+.family summary:hover strong, .family summary:focus-visible strong { text-decoration: underline; }
 @media(max-width:760px) {
   .intro-panel { display: block; min-height: 0; padding: 0; background: #090c14; }
   #film { position: relative; display: block; aspect-ratio: 1.8; height: auto; object-position: 73% center; }
@@ -110,9 +109,9 @@ h2 { margin: .55rem 0 0; }
   .brand-mark { width: 6.5rem; }
   #playback { top: .5rem; left: .65rem; right: auto; bottom: auto; font-size: .8rem; }
   .families { grid-template-columns: repeat(2,minmax(0,1fr)); }
-  .family { display: flex; flex-direction: column; align-items: stretch; }
+  .family > summary { display: flex; flex-direction: column; align-items: stretch; }
   .family img { aspect-ratio: 1.55; object-fit: contain; }
-  .family span { padding: .65rem .8rem 1rem; }
+  .family-name { padding: .65rem .8rem 1rem; }
 }
 
 /* La fotografía permanece en escena mientras avanza la ficha de cada equipo. */
@@ -143,16 +142,20 @@ h2 { margin: .55rem 0 0; }
   }
   .model-stage img {
     position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain;
-    opacity: 0; transform: translateY(1rem); transition: opacity .32s ease, transform .4s ease;
+    opacity: 0; will-change: opacity, transform;
   }
-  .model-stage img.is-current { opacity: 1; transform: none; }
+  .with-stage .model-nav::after {
+    content: ''; position: absolute; left: 0; bottom: 0; height: 2px;
+    width: calc(100% / var(--model-count)); background: var(--ink);
+    transform: translateX(var(--indicator-x,0%)); pointer-events: none;
+  }
+  .with-stage .model-nav [aria-current] { border-bottom-color: transparent; }
   .with-stage .machines { display: block; }
   .with-stage .machine { display: flex; flex-direction: column; align-items: stretch; min-height: var(--stage-height); justify-content: center; border-bottom: 1px solid var(--line); }
   .with-stage .machine-stage { display: none; }
   .with-stage .machine-copy { flex: none; padding: clamp(1.5rem,4vw,4.5rem); }
   .with-stage .machine-copy h3 { font-size: clamp(2.8rem,5.4vw,5.5rem); }
   .with-stage .machine-copy h3 span { font-size: .4em; }
-  .with-stage .machine-contact { margin-top: 0; }
 }
 @media (max-width: 760px) and (min-height: 550px) and (prefers-reduced-motion: no-preference) {
   .with-stage { --photo-height: clamp(10rem,32svh,19rem); }
@@ -164,4 +167,31 @@ h2 { margin: .55rem 0 0; }
   }
   .with-stage .machine-copy { padding: 1.4rem; }
   .with-stage .machine-copy h3 { font-size: 2.7rem; }
+}
+
+.machine-copy .tech-list { margin: 1rem 0 0; }
+.tech-list > div {
+  display: flex; align-items: baseline; justify-content: space-between; gap: .8rem;
+  padding: .5rem 0; border-bottom: 1px solid var(--line);
+}
+.machine-copy .tech-list dt { margin: 0; color: #435158; }
+.tech-list dd { text-align: right; }
+.machine-copy .installation { border-top: 0; margin: 0 0 1.2rem; }
+.machine-copy .installation .tech-list { margin: 0 0 .75rem; }
+.contact-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .25rem 1rem; }
+.contact-actions a { display: inline-flex; align-items: center; min-height: 44px; font-size: .88rem; font-weight: 600; }
+.wa-link { padding: .45rem 1rem; border-radius: 2rem; background: var(--ink); color: white; text-decoration: none; }
+.family { background: #f5f5f5; min-width: 0; }
+.family > summary { position: relative; padding: 0 1rem 0 0; cursor: pointer; list-style: none; }
+.family > summary::-webkit-details-marker { display: none; }
+.family > summary::after { content: '+'; position: absolute; top: .3rem; right: .5rem; font-size: 1.2rem; font-weight: 400; }
+.family[open] > summary::after { content: '−'; }
+.family-info { padding: .9rem 1rem 1rem; border-top: 1px solid var(--line); font-size: .93rem; }
+.family-info p + p, .family-info .contact-actions { margin-top: .65rem; }
+@media(max-width:760px) { .family > summary { padding: 0; } }
+@media(max-width:540px) {
+  .families { grid-template-columns: 1fr; }
+  .family > summary { display: grid; grid-template-columns: 32% 1fr; align-items: center; }
+  .family > summary img { aspect-ratio: 1.45; }
+  .family-name { padding-right: 1.8rem; }
 }

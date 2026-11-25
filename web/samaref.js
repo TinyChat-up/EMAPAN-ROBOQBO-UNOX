@@ -7,6 +7,8 @@ const modelLinks = [...document.querySelectorAll('.model-nav a')];
 const modelStage = document.querySelector('.model-stage');
 const modelNav = document.querySelector('.model-nav');
 let selectedModel = -1;
+let lastPosition = -1;
+let selectedChapter = -1;
 let scheduled = false;
 
 // Los artículos mantienen el contenido y sus enlaces en el flujo de lectura.
@@ -16,18 +18,31 @@ for (const model of models) {
   modelStage.append(image);
 }
 document.querySelector('.showroom').classList.add('with-stage');
+modelNav.style.setProperty('--model-count', models.length);
 
 function updateModel() {
   const margin = parseFloat(getComputedStyle(models[0]).scrollMarginTop) || 0;
-  const marker = margin + Math.max(1, window.innerHeight - margin) * 0.35;
-  let active = 0;
-  models.forEach((model, index) => {
-    if (model.getBoundingClientRect().top <= marker) active = index;
+  const available = Math.max(1, window.innerHeight - margin);
+  const marker = margin + available * 0.45;
+  const blendDistance = Math.max(60, Math.min(220, available * 0.32));
+  let position = 0;
+  for (const model of models.slice(1)) {
+    const top = model.getBoundingClientRect().top;
+    const t = Math.max(0, Math.min(1, 0.5 + (marker - top) / blendDistance));
+    position += t * t * (3 - 2 * t);
+  }
+  if (position === lastPosition) return;
+  lastPosition = position;
+  modelNav.style.setProperty('--indicator-x', (position * 100).toFixed(2) + '%');
+  Array.from(modelStage.children).forEach((image, index) => {
+    const offset = Math.max(-1, Math.min(1, index - position));
+    image.style.opacity = 1 - Math.abs(offset);
+    image.style.transform = 'translateY(' + (offset * 12).toFixed(2) + 'px)';
   });
+  const active = Math.round(position);
   if (active === selectedModel) return;
   selectedModel = active;
   modelLinks.forEach((link, index) => {
-    modelStage.children[index].classList.toggle('is-current', index === active);
     if (index === active) link.setAttribute('aria-current', 'location');
     else link.removeAttribute('aria-current');
   });
@@ -44,6 +59,8 @@ function updateChapter() {
   if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 1) {
     active = sections.length - 1;
   }
+  if (active === selectedChapter) return;
+  selectedChapter = active;
   chapters.forEach((link, index) => {
     if (index === active) link.setAttribute('aria-current', 'location');
     else link.removeAttribute('aria-current');
@@ -91,14 +108,6 @@ function prepareMessage() {
 brief.hidden = false;
 brief.addEventListener('input', prepareMessage);
 window.addEventListener('pageshow', prepareMessage);
-
-document.querySelectorAll('[data-equipo]').forEach(link => {
-  link.addEventListener('click', () => {
-    brief.elements.equipo.value = link.dataset.equipo;
-    prepareMessage();
-  });
-});
-
 
 // La portada es suficiente para movimiento reducido y ahorro de datos.
 const film = document.getElementById('film');
