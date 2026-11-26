@@ -1,64 +1,47 @@
 (() => {
-  const section = document.querySelector('.qbo-uses');
-  const videos = [...section.querySelectorAll('video')];
   const motion = matchMedia('(prefers-reduced-motion: reduce)');
-  let current = null;
-  let frame = 0;
+  const clips = [...document.querySelectorAll('.qbo-use video')].map(video => {
+    const button = video.parentElement.querySelector('.use-playback');
+    const sector = video.closest('article').id === 'hosteleria' ? 'hostelería' : 'heladería';
+    let visible = false;
+    let enabled = !motion.matches;
 
-  // Una sola demostración sigue la lectura. Los controles nativos permiten
-  // detenerla y mantienen esa decisión mientras se siga viendo el mismo uso.
-  function update() {
-    frame = 0;
-    const line = innerHeight * .5;
-    let next = null;
-    let nearest = Infinity;
-    for (const video of videos) {
-      const rect = video.getBoundingClientRect();
-      const visible = Math.min(innerHeight, rect.bottom) - Math.max(0, rect.top);
-      const distance = Math.abs(rect.top + rect.height / 2 - line);
-      if (visible >= rect.height * .55 && distance < nearest) {
-        next = video;
-        nearest = distance;
+    function updateControl() {
+      button.classList.toggle('is-playing', !video.paused);
+      button.setAttribute('aria-label', (video.paused ? 'Reproducir' : 'Pausar') + ' el vídeo de ' + sector);
+    }
+
+    function sync() {
+      if (!visible || !enabled || document.hidden || document.querySelector('dialog[open]')) {
+        video.pause();
+      } else if (video.paused) {
+        video.play().catch(updateControl);
       }
     }
-    if (next === current) return;
-    current?.pause();
-    current = next;
-    if (current && !motion.matches && !navigator.connection?.saveData &&
-        !document.hidden && !document.querySelector('dialog[open]')) {
-      current.play().catch(() => {});
-    }
-  }
 
-  function queueUpdate() {
-    if (!frame) frame = requestAnimationFrame(update);
-  }
-
-  for (const video of videos) {
-    video.addEventListener('play', () => {
-      for (const other of videos) if (other !== video) other.pause();
-      current = video;
+    const observer = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting && entry.intersectionRatio > 0;
+      sync();
     });
-  }
+    observer.observe(video);
+    button.addEventListener('click', () => {
+      enabled = video.paused;
+      sync();
+    });
+    video.addEventListener('play', updateControl);
+    video.addEventListener('pause', updateControl);
+    motion.addEventListener('change', () => { enabled = !motion.matches; sync(); });
+    video.controls = false;
+    button.hidden = false;
+    return sync;
+  });
 
-  const observer = new IntersectionObserver(([entry]) => {
-    if (entry.isIntersecting) {
-      addEventListener('scroll', queueUpdate, { passive: true });
-      addEventListener('resize', queueUpdate);
-      queueUpdate();
-    } else {
-      removeEventListener('scroll', queueUpdate);
-      removeEventListener('resize', queueUpdate);
-      current?.pause();
-      current = null;
-    }
-  });
-  observer.observe(section);
-  motion.addEventListener('change', () => {
-    if (motion.matches) current?.pause();
-    else { current = null; queueUpdate(); }
-  });
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden) current?.pause();
+  const refresh = () => clips.forEach(sync => sync());
+  document.addEventListener('visibilitychange', refresh);
+  window.addEventListener('pageshow', refresh);
+  // Brasa y el selector pueden abrirse justo cuando un vídeo entra en pantalla.
+  const dialogs = new MutationObserver(refresh);
+  document.querySelectorAll('dialog').forEach(dialog => {
+    dialogs.observe(dialog, { attributes: true, attributeFilter: ['open'] });
   });
 })();

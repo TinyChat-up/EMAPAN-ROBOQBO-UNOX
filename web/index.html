@@ -32,10 +32,13 @@
       <h2 id="uso-cocina">Hostelería</h2>
       <p>Qbo tritura la albahaca y mezcla los ingredientes del pesto en la misma cuba.</p>
     </div>
-    <video id="qbo-production" controls muted loop playsinline preload="none" poster="assets/opt/qbo-production-poster-960.webp" aria-label="Preparación de pesto con Roboqbo">
-      <source media="(max-width: 760px)" src="assets/opt/qbo-production-m.mp4" type="video/mp4">
-      <source src="assets/qbo-production.mp4" type="video/mp4">
-    </video>
+    <div class="use-film">
+      <video id="qbo-production" controls muted loop playsinline preload="none" poster="assets/opt/qbo-production-poster-960.webp" aria-label="Preparación de pesto con Roboqbo">
+        <source media="(max-width: 760px)" src="assets/opt/qbo-production-m.mp4" type="video/mp4">
+        <source src="assets/qbo-production.mp4" type="video/mp4">
+      </video>
+      <button class="use-playback" type="button" aria-controls="qbo-production" aria-label="Reproducir el vídeo de hostelería" hidden></button>
+    </div>
   </article>
   <article class="qbo-use" id="heladeria" tabindex="-1" aria-labelledby="uso-helado">
     <span class="use-bookmark" id="heladeria-bases"></span><span class="use-bookmark" id="heladeria-pastas"></span><span class="use-bookmark" id="heladeria-fruta"></span>
@@ -44,7 +47,10 @@
       <p>Qbo prepara bases de fruta para la mantecadora y refina pastas de pistacho o almendra.</p>
     </div>
     <div class="use-gelato-media">
-    <video controls muted loop playsinline preload="none" poster="assets/qbo-heladeria/fresas.webp" aria-label="Preparación de fresas en la cuba de Roboqbo" src="assets/qbo-heladeria/fresas.mp4"></video>
+      <div class="use-film">
+        <video id="qbo-fresas" controls muted loop playsinline preload="none" poster="assets/qbo-heladeria/fresas.webp" aria-label="Preparación de fresas en la cuba de Roboqbo" src="assets/qbo-heladeria/fresas.mp4"></video>
+        <button class="use-playback" type="button" aria-controls="qbo-fresas" aria-label="Reproducir el vídeo de heladería" hidden></button>
+      </div>
     </div>
   </article>
 </section><section class="product-story qbo-story" id="equipos" data-story="qbo" aria-label="Descubre la gama ROBOQBO al desplazarte"><div class="product-stage"><div class="story-heading"><span class="eyebrow">01 / ROBOQBO</span><span class="eyebrow story-prompt">DESLIZA </span><button class="finder-chip" type="button" data-finder="gama">¿Cuál encaja contigo?</button></div><div class="product-layout"><div class="product-copy"><span class="model-kicker" id="qbo-name">Qbo.PRO · Cocina y obrador</span><h2 id="qbo-headline">Una cuba.<br>Mil ideas.</h2><p id="qbo-description">Cortar. Mezclar. Cocinar.</p><div class="product-fact"><span id="qbo-fact">5 / 10</span><span id="qbo-fact-label">litros · gama PRO</span></div><button class="pill " id="qbo-demo" data-demo="Qbo.PRO"><span class="btn-label">Probar gratis con mi receta</span></button><a class="text-link subtle" href="#qbo-tiempos">Comparar tiempos <img src="assets/icons/arrow-up-right.svg" alt="" class="arrow-icon" aria-hidden="true"></a></div><div class="product-visual"><span class="product-word" aria-hidden="true">Qbo.</span>

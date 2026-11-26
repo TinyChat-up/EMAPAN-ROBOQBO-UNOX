@@ -1,5 +1,9 @@
 .qbo-uses {
-  padding: clamp(18px, 2.5vw, 36px) max(6vw, calc((100% - 1040px) / 2));
+  --film-height: clamp(190px, 23vw, 300px);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(18px, 3vw, 48px);
+  padding: clamp(24px, 4vw, 60px) max(5vw, calc((100% - 1120px) / 2));
   background: #edf0e5;
   color: #1e3024;
 }
@@ -7,39 +11,61 @@
 .qbo-use {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, .86fr) minmax(0, 1.14fr);
-  align-items: center;
-  gap: clamp(24px, 6vw, 88px);
-  padding-block: clamp(18px, 1.8vw, 26px);
+  align-content: start;
+  grid-template-areas: "film" "copy";
+  gap: clamp(14px, 2vw, 24px);
 }
-.qbo-use + .qbo-use { border-top: 1px solid #bdc8b5; }
+.use-copy { grid-area: copy; }
 .use-copy h2 {
-  margin: 0 0 12px;
-  font-size: clamp(30px, 4.8vw, 74px);
+  margin: 0 0 8px;
+  font-size: clamp(30px, 3.8vw, 56px);
   line-height: 1;
   font-weight: 400;
-  letter-spacing: -.06em;
+  letter-spacing: -.055em;
 }
-.use-copy p { max-width: 38ch; margin: 0; font-size: clamp(15px, 1.25vw, 18px); line-height: 1.45; }
-.qbo-use video {
+.use-copy p { margin: 0; max-width: 46ch; font-size: clamp(14px, 1.2vw, 17px); line-height: 1.5; }
+.qbo-use > .use-film, .use-gelato-media { grid-area: film; }
+.use-film { position: relative; min-width: 0; height: var(--film-height); }
+.use-film video {
   display: block;
   width: 100%;
-  height: clamp(175px, 18vw, 224px);
+  height: 100%;
   object-fit: cover;
+  border-radius: 5px;
   background: #19251d;
-  border-radius: 3px;
+}
+.use-gelato-media {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 5px;
+}
+.use-gelato-media .use-film { aspect-ratio: 480 / 900; }
+.use-gelato-media::after {
+  content: '';
+  border-radius: 5px;
+  background: url('assets/qbo-heladeria/laboratorio.webp') center / cover;
 }
 .use-bookmark { position: absolute; top: 0; }
-.use-gelato-media { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 4px; }
-@media (min-width: 681px) {
-  .use-gelato-media::before {
-    content: '';
-    border-radius: 3px;
-    background: url('assets/qbo-heladeria/laboratorio.webp') center / cover;
-  }
+.use-playback {
+  position: absolute;
+  right: 2px;
+  bottom: 2px;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
 }
-
-.qbo-use video:focus-visible { outline: 3px solid #456838; outline-offset: 3px; }
+.use-playback[hidden] { display: none; }
+.use-playback::before, .use-playback::after { content: ''; grid-area: 1 / 1; }
+.use-playback::before { width: 28px; height: 28px; border-radius: 50%; background: #102016c9; }
+.use-playback::after { margin-left: 2px; border-block: 5px solid transparent; border-left: 8px solid currentColor; }
+.use-playback.is-playing::after { box-sizing: content-box; width: 3px; height: 10px; margin: 0; border: 0; border-inline: 2px solid currentColor; }
+.use-playback:focus-visible { outline: 2px solid #fff; outline-offset: -3px; }
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
     .qbo-use .use-copy {
@@ -51,11 +77,13 @@
   }
 }
 @media (max-width: 680px) {
-  .qbo-uses { padding: 16px max(16px, 5vw); }
-  .qbo-use { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 16px; padding-block: 22px; }
-  .use-copy h2 { margin-bottom: 8px; }
-  .use-copy p { font-size: 14px; }
+  .qbo-uses { grid-template-columns: 1fr; gap: 0; padding: 22px 5vw; }
+  .qbo-use { align-items: center; gap: 16px; }
+  #hosteleria { grid-template: "film copy" auto / minmax(0, 1.12fr) minmax(0, 1fr); padding-bottom: 18px; }
+  #heladeria { grid-template: "copy film" auto / minmax(0, 1fr) minmax(100px, .75fr); padding-top: 18px; border-top: 1px solid #bdc8b5; }
+  #hosteleria .use-film { height: auto; aspect-ratio: 5 / 4; }
   .use-gelato-media { display: block; }
+  .use-gelato-media::after { content: none; }
+  .use-gelato-media .use-film { height: auto; max-width: 150px; margin-left: auto; aspect-ratio: 3 / 4; }
   .qbo-uses, .qbo-use, .use-bookmark { scroll-margin-top: 70px; }
-  .qbo-use video { height: clamp(170px, 42vw, 210px); }
 }
