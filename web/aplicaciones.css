@@ -1,0 +1,61 @@
+.qbo-uses {
+  padding: clamp(18px, 2.5vw, 36px) max(6vw, calc((100% - 1040px) / 2));
+  background: #edf0e5;
+  color: #1e3024;
+}
+.qbo-uses, .qbo-use, .use-bookmark { scroll-margin-top: 92px; }
+.qbo-use {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, .86fr) minmax(0, 1.14fr);
+  align-items: center;
+  gap: clamp(24px, 6vw, 88px);
+  padding-block: clamp(18px, 1.8vw, 26px);
+}
+.qbo-use + .qbo-use { border-top: 1px solid #bdc8b5; }
+.use-copy h2 {
+  margin: 0 0 12px;
+  font-size: clamp(30px, 4.8vw, 74px);
+  line-height: 1;
+  font-weight: 400;
+  letter-spacing: -.06em;
+}
+.use-copy p { max-width: 38ch; margin: 0; font-size: clamp(15px, 1.25vw, 18px); line-height: 1.45; }
+.qbo-use video {
+  display: block;
+  width: 100%;
+  height: clamp(175px, 18vw, 224px);
+  object-fit: cover;
+  background: #19251d;
+  border-radius: 3px;
+}
+.use-bookmark { position: absolute; top: 0; }
+.use-gelato-media { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 4px; }
+@media (min-width: 681px) {
+  .use-gelato-media::before {
+    content: '';
+    border-radius: 3px;
+    background: url('assets/qbo-heladeria/laboratorio.webp') center / cover;
+  }
+}
+
+.qbo-use video:focus-visible { outline: 3px solid #456838; outline-offset: 3px; }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .qbo-use .use-copy {
+      animation: use-arrival linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 100%;
+    }
+    @keyframes use-arrival { from { transform: translateY(12px); } to { transform: none; } }
+  }
+}
+@media (max-width: 680px) {
+  .qbo-uses { padding: 16px max(16px, 5vw); }
+  .qbo-use { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 16px; padding-block: 22px; }
+  .use-copy h2 { margin-bottom: 8px; }
+  .use-copy p { font-size: 14px; }
+  .use-gelato-media { display: block; }
+  .qbo-uses, .qbo-use, .use-bookmark { scroll-margin-top: 70px; }
+  .qbo-use video { height: clamp(170px, 42vw, 210px); }
+}
