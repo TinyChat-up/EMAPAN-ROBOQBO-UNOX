@@ -1,0 +1,19 @@
+{
+  "fabricante": "Roboqbo",
+  "sector": "https://www.roboqbo.com/es_es/sectores/helader%C3%ADas/qbo-para-helader%C3%ADas/",
+  "datos": "Selección de equipos, accesorios y comparativas de tiempo de cocción publicadas en la página de heladerías. Los ejemplos no especifican tamaño de lote ni modelo.",
+  "recursos": {
+    "obrador.webp": "https://www.roboqbo.com/roboqbo_foodservice/media/contents/qbo-pro-for-ice-cream-shops-d.jpg",
+    "obrador-m.webp": "https://www.roboqbo.com/roboqbo_foodservice/media/contents/qbo-pro-for-ice-cream-shops-m-2.jpg",
+    "pistacho.webp": "https://www.roboqbo.com/roboqbo_foodservice/media/contents/performance-ice-cream-pistacchio-paste.jpg",
+    "almendra.webp": "https://www.roboqbo.com/roboqbo_foodservice/media/contents/performance-ice-cream-almond-paste.jpg",
+    "sorbete.webp": "https://www.roboqbo.com/roboqbo_foodservice/media/contents/performance-ice-cream-sorbetto-base.jpg",
+    "pro-5.webp": "https://www.roboqbo.com/roboqbo_foodservice/media/contents/QEAA-0005-AAAA.png",
+    "pro-10.webp": "https://www.roboqbo.com/roboqbo_foodservice/media/contents/QEAA-0010-AAAA.png",
+    "top-15.webp": "https://www.roboqbo.com/roboqbo_foodservice/media/contents/QECB-0015-AAAA.png",
+    "cuba.mp4": "https://www.roboqbo.com/roboqbo_foodservice/media/contents/qbo-for-ice-cream-shops-pillars-all-in-one.mp4",
+    "cuba.webp": "https://www.roboqbo.com/roboqbo_foodservice/media/contents/qbo-for-ice-cream-shops-pillars-all-in-one.mp4",
+    "fresas.mp4": "https://www.roboqbo.com/roboqbo_foodservice/media/contents/ice-cream-shops-business-growth_d.mp4",
+    "fresas.webp": "https://www.roboqbo.com/roboqbo_foodservice/media/contents/ice-cream-shops-business-growth_d.mp4"
+  }
+}

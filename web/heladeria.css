@@ -1,0 +1,106 @@
+.gelato {
+  --gelato-paper: #f3f2e9;
+  --gelato-ink: #1d3025;
+  --gelato-rule: #c3c8b7;
+  color: var(--gelato-ink);
+  background: var(--gelato-paper);
+}
+.gelato h2, .gelato h3, .gelato h4, .gelato p, .gelato figure { margin: 0; }
+.gelato-cover {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  align-items: end;
+  min-height: clamp(450px, 73svh, 830px);
+  padding: clamp(28px, 6vw, 100px);
+  background: #242f29;
+  color: #faf9ef;
+}
+.gelato-cover picture, .gelato-cover::after {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+.gelato-cover img { width: 100%; height: 100%; object-fit: cover; object-position: center 43%; }
+.gelato-cover::after {
+  content: '';
+  background: linear-gradient(0deg, #0c160ff2 0, #0c160f91 23%, transparent 70%),
+              linear-gradient(90deg, #10171168, transparent 68%);
+}
+.gelato-cover h2 {
+  margin: 14px 0 18px;
+  font-size: clamp(58px, 7.8vw, 132px);
+  line-height: .94;
+  font-weight: 400;
+  letter-spacing: -.063em;
+}
+.gelato-cover-copy > p:last-child { max-width: 38ch; font-size: clamp(16px, 1.35vw, 21px); line-height: 1.45; }
+.gelato-story, .gelato-equipment { max-width: 1520px; margin-inline: auto; padding: clamp(54px, 7vw, 108px) clamp(24px, 6vw, 100px); }
+.gelato-story { display: grid; grid-template-columns: minmax(0, .75fr) minmax(0, 1.25fr); gap: clamp(36px, 7vw, 110px); }
+.gelato-index { position: sticky; align-self: start; top: max(100px, 16vh); }
+.gelato h3 { font-size: clamp(36px, 4.6vw, 76px); line-height: .98; letter-spacing: -.06em; font-weight: 400; }
+.gelato-index em { color: #596b42; font-style: normal; }
+.gelato-index nav { display: grid; margin-top: 36px; max-width: 32ch; }
+.gelato-index a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+  border-bottom: 1px solid var(--gelato-rule);
+  color: inherit;
+  text-decoration: none;
+  font-size: 15px;
+}
+.gelato-index a::before { content: ''; width: 7px; height: 7px; border: 1px solid #707f65; border-radius: 50%; }
+.gelato-index a[aria-current]::before, .gelato-index a:hover::before { background: var(--gelato-ink); }
+.gelato a:focus-visible, .gelato video:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+.gelato-preparations article { scroll-margin-top: 18px; }
+.gelato-preparations article + article { margin-top: clamp(52px, 7vw, 100px); }
+.gelato-preparations video, .gelato-pair img, .gelato-fruit img { display: block; width: 100%; object-fit: cover; }
+.gelato-preparations article > video { height: auto; aspect-ratio: 840 / 608; background: #222; }
+.gelato-pair, .gelato-fruit { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 5px; }
+.gelato-preparations figure { position: relative; min-width: 0; overflow: hidden; }
+.gelato-pair img { aspect-ratio: 4 / 5; height: auto; }
+.gelato-fruit { grid-template-columns: 1fr 1.2fr; }
+.gelato-fruit video { height: auto; background: #222; }
+.gelato-fruit img { position: absolute; inset: 0; height: 100%; }
+.gelato-preparations figcaption {
+  position: absolute; left: 12px; bottom: 12px; padding: 5px 10px;
+  background: #f3f2e9; color: var(--gelato-ink); font-size: 12px; border-radius: 2px;
+}
+.gelato-preparations h4 { font-size: clamp(29px, 3vw, 48px); line-height: 1.04; font-weight: 400; letter-spacing: -.05em; margin: 22px 0 10px; }
+.gelato-preparations p { font-size: 16px; line-height: 1.55; max-width: 61ch; }
+.gelato-preparations .gelato-time { border-top: 1px solid var(--gelato-rule); margin-top: 16px; padding-top: 10px; font-size: 14px; }
+.gelato-time strong { font-size: 21px; font-weight: 500; letter-spacing: -.035em; }
+.gelato-preparations .gelato-source { font-size: 13px; color: #515c4f; margin-top: 18px; }
+.gelato-equipment { border-top: 1px solid var(--gelato-rule); }
+.gelato-equipment ul { list-style: none; padding: 0; margin: 32px 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(10px, 2vw, 32px); }
+.gelato-equipment li { background: #e5e8db; padding: clamp(15px, 2vw, 28px); }
+.gelato-equipment li img { display: block; width: 100%; height: clamp(150px, 15vw, 230px); object-fit: contain; }
+.gelato-equipment h4 { font-size: clamp(24px, 2.3vw, 36px); font-weight: 400; letter-spacing: -.04em; margin: 12px 0 4px; }
+.gelato-equipment p { font-size: 15px; }
+.gelato-equipment > a { color: inherit; display: inline-block; font-size: 16px; line-height: 1.6; text-decoration: none; }
+.gelato-equipment > a span { display: block; text-decoration: underline; text-underline-offset: 4px; }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .gelato-cover img { animation: gelato-cover-travel linear both; animation-timeline: view(); }
+    @keyframes gelato-cover-travel { from { transform: scale(1.08) translateY(-2%); } to { transform: scale(1.08) translateY(2%); } }
+  }
+}
+@media (max-width: 740px), (max-height: 530px) {
+  .gelato-story { display: block; }
+  .gelato-index { position: static; margin-bottom: 28px; }
+  .gelato-index nav { max-width: none; margin-top: 20px; }
+}
+@media (max-width: 700px) {
+  .gelato-cover { min-height: min(78svh, 760px); padding: 36px 24px; }
+  .gelato-cover img { object-position: center 42%; }
+  .gelato-equipment ul { grid-template-columns: 1fr; gap: 6px; }
+  .gelato-equipment li { display: grid; grid-template-columns: minmax(76px, 30%) 1fr; align-items: center; gap: 16px; }
+  .gelato-equipment li img { height: 95px; }
+  .gelato-equipment h4 { margin-top: 0; }
+}
+
+body.in-gelato .contact-dock,
+body.in-gelato .contact-dock > * { visibility: hidden; pointer-events: none; }
