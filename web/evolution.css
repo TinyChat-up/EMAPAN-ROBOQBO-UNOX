@@ -533,3 +533,18 @@ footer > a:not(.logo),
   .qbo-story,
   .unox-journey { height: auto; }
 }
+
+/* El selector sigue a mano. El contacto se resuelve en el cierre de cada marca. */
+.contact-dock > .dock-contact {
+  display: inline-flex;
+  align-items: center;
+  padding-inline: 14px;
+  border-color: transparent;
+  background: transparent;
+  color: #e1e6e2;
+  text-decoration: underline;
+  text-underline-offset: .25em;
+}
+@media (max-width: 760px) {
+  .contact-dock:has(> .dock-contact) { width: fit-content; }
+}
