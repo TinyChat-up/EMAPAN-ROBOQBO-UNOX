@@ -566,3 +566,66 @@ footer > a:not(.logo),
 @media (max-width: 760px) {
   .contact-dock:has(> .dock-contact) { width: fit-content; }
 }
+
+/* La prueba de Roboqbo acompaña al selector de marcas en la cabecera. */
+.trial-access {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 44px;
+  color: var(--brand);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.15;
+  text-decoration: none;
+}
+.trial-access:hover span { text-decoration: underline; text-underline-offset: .25em; }
+#trial-dialog {
+  margin: auto;
+  max-width: 440px;
+  padding: clamp(22px, 4vw, 40px);
+  background: #19231c;
+  color: #f2f4ed;
+  text-align: center;
+}
+#trial-dialog .close { position: absolute; right: 16px; top: 12px; }
+.trial-host { display: block; margin: 0 auto 12px; }
+#trial-dialog h2 { margin: 14px 0; font-size: clamp(34px, 5vw, 46px); }
+#trial-dialog em { color: var(--brand); }
+#trial-copy { margin: 0; color: #d4dbd0; font-size: 15px; line-height: 1.55; }
+.trial-call {
+  display: grid;
+  width: fit-content;
+  margin: 20px auto 10px;
+  gap: 3px;
+  color: var(--brand);
+  text-decoration: none;
+}
+.trial-call span { font-size: 13px; }
+.trial-call strong { font-size: 28px; font-weight: 500; }
+.trial-tools { display: flex; flex-wrap: wrap; justify-content: center; gap: 0 20px; }
+.trial-tools button {
+  min-height: 44px;
+  background: transparent;
+  border: 0;
+  color: #e1e7dd;
+  font-size: 13px;
+  text-decoration: underline;
+  text-underline-offset: .22em;
+}
+.trial-tools .guide-setting[aria-pressed='true']::after { content: ' activa'; }
+.trial-tools .guide-setting[aria-pressed='false']::after { content: ' oculta'; }
+.trial-status:empty { display: none; }
+#trial-dialog.is-speaking .trial-host { animation: trial-voice .65s ease-in-out infinite alternate; }
+@keyframes trial-voice { to { transform: translateY(-3px) rotate(3deg); } }
+@media (prefers-reduced-motion: reduce) {
+  #trial-dialog.is-speaking .trial-host { animation: none; }
+}
+@media (max-width: 760px) {
+  .trial-access { gap: 3px; font-size: 11px; }
+  .trial-access span { max-width: min-content; }
+  .trial-access img { width: 22px; height: auto; }
+}
+@media (max-width: 340px) {
+  .trial-access img { width: 17px; }
+}

@@ -137,6 +137,7 @@
    * --------------------------------------------------------------------- */
   const contact = $('#demo-dialog');
   const finder = $('#finder-dialog');
+  const trial = $('#trial-dialog');
   let pausedVideos = null;
   let returnFocus = null;
   let afterClose = null;
@@ -168,7 +169,7 @@
     returnFocus = null;
   }
 
-  for (const dialog of [contact, finder]) {
+  for (const dialog of [contact, finder, trial].filter(Boolean)) {
     dialog.setAttribute('data-lenis-prevent', '');
     dialog.addEventListener('close', dialogClosed);
     $('.close', dialog).addEventListener('click', () => dialog.close());
@@ -351,8 +352,47 @@
     if (opener) openFinder(opener.dataset.finder, opener);
   });
 
-  // Brasa también abre el selector: deja de ser solo decorativa.
-  $('.brasa-button')?.addEventListener('click', event => openFinder('brasa', event.currentTarget));
+  if (trial) {
+    const access = $('.trial-access');
+    const presentTrial = () => showDialog(trial, access);
+    access.setAttribute('aria-haspopup', 'dialog');
+    access.setAttribute('aria-controls', trial.id);
+    access.addEventListener('click', event => {
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      presentTrial();
+    });
+    $('.brasa-button').addEventListener('click', presentTrial);
+
+    const voice = $('#trial-voice');
+    const audio = $('#trial-audio');
+    const status = $('.trial-status', trial);
+    voice.hidden = false;
+
+    function updateVoice() {
+      trial.classList.toggle('is-speaking', !audio.paused);
+      voice.textContent = audio.paused ? 'Escuchar a Brasa' : 'Detener la voz';
+    }
+    function stopVoice() {
+      audio.pause();
+      if (audio.currentTime) audio.currentTime = 0;
+    }
+    voice.addEventListener('click', async () => {
+      if (!audio.paused) { stopVoice(); return; }
+      status.textContent = '';
+      try {
+        await audio.play();
+      } catch (error) {
+        if (error.name !== 'AbortError') status.textContent = 'No se ha podido reproducir la voz de Brasa.';
+      }
+    });
+    for (const event of ['play', 'pause', 'ended']) audio.addEventListener(event, updateVoice);
+    trial.addEventListener('close', () => { stopVoice(); status.textContent = ''; });
+    document.addEventListener('visibilitychange', () => { if (document.hidden) stopVoice(); });
+    window.addEventListener('pagehide', stopVoice);
+  } else {
+    $('.brasa-button')?.addEventListener('click', event => openFinder('brasa', event.currentTarget));
+  }
 
   /* ------------------------------------------------------------------------
    * 5. Contacto contextual (WhatsApp con el mensaje preparado)
