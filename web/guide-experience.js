@@ -24,7 +24,17 @@ function plan(goal){
 function track(){
  trackFrame=0;const h=innerHeight;document.body.classList.toggle('past-intro',scrollY>h*.55);const cr=q('#contacto').getBoundingClientRect();document.body.classList.toggle('at-contact',cr.top<h*.85);
  const ps=qa('.product-story').some(el=>{const r=el.getBoundingClientRect();return r.top<h*.65&&r.bottom>h*.35});document.body.classList.toggle('in-product',ps);const tr=q('.time-journey')?.getBoundingClientRect();document.body.classList.toggle('in-times',!!tr&&tr.top<h*.7&&tr.bottom>h*.3);
- const sr=q('.finale-mascot-slot')?.getBoundingClientRect();const was=finale;finale=!!sr&&sr.top>=80&&sr.bottom<h-20;finalPoint=finale?{x:sr.left,y:sr.top}:null;guide.classList.toggle('is-finale',finale);collect();route=[];nextRoam=0;
+ const sr=q('.finale-mascot-slot')?.getBoundingClientRect();const was=finale;finale=!!sr&&sr.top>=80&&sr.bottom<h-20;finalPoint=finale?{x:sr.left,y:sr.top}:null;guide.classList.toggle('is-finale',finale);
+ // En Roboqbo, Brasa presenta la prueba en el centro y ocupa su hueco en el cierre.
+ if (!isUnox) {
+   if (finale) {
+     guide.style.setProperty('--guide-size', sr.width + 'px');
+     guide.style.transform = 'translate3d(' + sr.left + 'px,' + sr.top + 'px,0)';
+     guide.style.opacity = '1';
+   }
+   return;
+ }
+ collect();route=[];nextRoam=0;
  if(activeCue&&(!visible(hero)||performance.now()-activeCue.since>2500))finishCue(visible(hero));
  // On scroll, fade out only if content moves into the guide's safe lane.
  hidden=!clear(x,y,Math.min(size,baseSize()));if(hidden&&!finale){const candidates=[{x:3,y:clamp(y,80,h-baseSize()-12)},{x:innerWidth-baseSize()-3,y:clamp(y,80,h-baseSize()-12)}];const safe=candidates.find(p=>clear(p.x,p.y));if(safe){x=safe.x;y=safe.y;vx=vy=0;hidden=false}}
@@ -42,8 +52,8 @@ function animate(now){
  }
  guide.dataset.routeLength=String(route.length);guide.dataset.motionPhase=activeCue?'welcome':finale?'finale':route.length?'exploring':'dancing';guide.style.setProperty('--guide-size',size+'px');guide.style.transform=`translate3d(${x.toFixed(2)}px,${y.toFixed(2)}px,0)`;if(!reduced.matches)frame=requestAnimationFrame(animate);
 }
-function wake(){if(!frame&&!muted&&!document.hidden){lastTime=performance.now();frame=requestAnimationFrame(animate)}}
-function welcome(){if(didPress||muted||reduced.matches||activeCue||!hero||scrollY>innerHeight*.5)return;hero.pause();activeCue={button:heroButton,since:performance.now()};if(isUnox)heroButton.textContent='Reproducir';collect();route=[];nextRoam=0;wake()}
+function wake(){if(isUnox&&!frame&&!muted&&!document.hidden){lastTime=performance.now();frame=requestAnimationFrame(animate)}}
+function welcome(){if(!isUnox||didPress||muted||reduced.matches||activeCue||!hero||scrollY>innerHeight*.5)return;hero.pause();activeCue={button:heroButton,since:performance.now()};if(isUnox)heroButton.textContent='Reproducir';collect();route=[];nextRoam=0;wake()}
 hero?.addEventListener('play',welcome);heroButton?.addEventListener('click',e=>{if(e.isTrusted){rememberPress();activeCue=null;route=[]}},true);
 addEventListener('scroll',scheduleTrack,{passive:true});addEventListener('resize',track);reduced.addEventListener('change',()=>{finishCue(false);track()});document.addEventListener('visibilitychange',()=>{if(document.hidden){if(activeCue){activeCue=null;route=[]}}else{track();wake()}});paintPreference();track();if(hero&&!hero.paused)welcome();
 // El diálogo de contacto vive ahora en evolution.js (contacto contextual).

@@ -354,7 +354,43 @@
 
   if (trial) {
     const access = $('.trial-access');
-    const presentTrial = () => showDialog(trial, access);
+    const scrollPrompt = new AbortController();
+    const sessionKey = 'emapan-qbo-prueba-presentada';
+    const presentTrial = (trigger = access) => {
+      scrollPrompt.abort();
+      try { sessionStorage.setItem(sessionKey, '1'); } catch {}
+      showDialog(trial, trigger);
+    };
+
+    let seen = false;
+    try { seen = sessionStorage.getItem(sessionKey) === '1'; } catch {}
+    if (!seen) {
+      // La ayuda gestual también desplaza la portada. Esperar un gesto del visitante.
+      let origin = null;
+      const listen = { passive: true, signal: scrollPrompt.signal };
+      function arm() {
+        if (document.hidden || $('dialog[open]') || $('#guide-setting').getAttribute('aria-pressed') !== 'true') return;
+        if (origin === null) origin = scrollY;
+      }
+      window.addEventListener('wheel', event => { if (!event.ctrlKey && event.deltaY > 0) arm(); }, listen);
+      window.addEventListener('touchmove', arm, listen);
+      window.addEventListener('keydown', event => {
+        if (!event.defaultPrevented && !event.target.closest('input, textarea, select, button, [contenteditable]') &&
+            ['ArrowDown', 'PageDown', 'End', ' '].includes(event.key)) arm();
+      }, listen);
+      window.addEventListener('pointerdown', event => {
+        if (event.clientX >= document.documentElement.clientWidth - 1 || event.button === 1) arm();
+      }, listen);
+      window.addEventListener('scroll', () => {
+        if (origin === null) return;
+        if ($('dialog[open]') || document.hidden || document.body.classList.contains('scroll-onboarding')) {
+          origin = null;
+          return;
+        }
+        origin = Math.min(origin, scrollY);
+        if (scrollY - origin >= 28) presentTrial(document.activeElement);
+      }, listen);
+    }
     access.setAttribute('aria-haspopup', 'dialog');
     access.setAttribute('aria-controls', trial.id);
     access.addEventListener('click', event => {
@@ -362,7 +398,6 @@
       event.preventDefault();
       presentTrial();
     });
-    $('.brasa-button').addEventListener('click', presentTrial);
 
     const voice = $('#trial-voice');
     const audio = $('#trial-audio');

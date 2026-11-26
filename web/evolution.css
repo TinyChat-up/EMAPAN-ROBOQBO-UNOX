@@ -624,8 +624,5 @@ footer > a:not(.logo),
 @media (max-width: 760px) {
   .trial-access { gap: 3px; font-size: 11px; }
   .trial-access span { max-width: min-content; }
-  .trial-access img { width: 22px; height: auto; }
 }
-@media (max-width: 340px) {
-  .trial-access img { width: 17px; }
-}
+.experience-qbo:not(.scroll-onboarding) .brasa-guide:not(.is-finale) { display: none; }
