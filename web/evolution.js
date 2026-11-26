@@ -366,11 +366,12 @@
     try { seen = sessionStorage.getItem(sessionKey) === '1'; } catch {}
     if (!seen) {
       // La ayuda gestual también desplaza la portada. Esperar un gesto del visitante.
+      let lastScrollY = scrollY;
       let origin = null;
       const listen = { passive: true, signal: scrollPrompt.signal };
       function arm() {
         if (document.hidden || $('dialog[open]') || $('#guide-setting').getAttribute('aria-pressed') !== 'true') return;
-        if (origin === null) origin = scrollY;
+        if (origin === null) origin = lastScrollY;
       }
       window.addEventListener('wheel', event => { if (!event.ctrlKey && event.deltaY > 0) arm(); }, listen);
       window.addEventListener('touchmove', arm, listen);
@@ -382,6 +383,7 @@
         if (event.clientX >= document.documentElement.clientWidth - 1 || event.button === 1) arm();
       }, listen);
       window.addEventListener('scroll', () => {
+        lastScrollY = scrollY;
         if (origin === null) return;
         if ($('dialog[open]') || document.hidden || document.body.classList.contains('scroll-onboarding')) {
           origin = null;
